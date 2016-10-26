@@ -21,12 +21,11 @@ private Connection connect = null;
 private Statement statement = null;
 private PreparedStatement preparedStatement = null;
 private ResultSet resultSet = null;
+private String max_number;
 
-private List<List<String>> listOfLists = new ArrayList<List<String>>();
-private List<String> internal;
-
-public void readDatabase() throws Exception {
+public int readDatabase(String roomNumber){
          try {
+            
             //This will load the MySQL driver, each DB has its own driver
             Class.forName("org.sqlite.JDBC");
             // Setup the connection with the DB
@@ -34,22 +33,19 @@ public void readDatabase() throws Exception {
                          .getConnection("jdbc:sqlite:Database/SQLite/new.db");
             statement = connect.createStatement();
             
-            // String sub = ("'" + subCode + "'");
+            String sub = ("'" + roomNumber + "'");
             // String num = ("'%" + cNum + "%'");
 
             // System.out.println(sub);
             // System.out.println(num);
             //this function counts how many class a student is taking. 
-            String setSQL = ("SELECT * from rooms");
+            String setSQL = ("SELECT * from rooms where room_number =" + sub);
 
             resultSet = statement.executeQuery(setSQL);
             
             while (resultSet.next()) {
-                internal = new ArrayList<String>();
-                String room_number = resultSet.getString("room_number");
-                
-                internal.add(room_number);
-                System.out.println(room_number);
+                max_number = resultSet.getString("max_number");
+                //System.out.println(max_number);
             }        
              
 
@@ -59,6 +55,7 @@ public void readDatabase() throws Exception {
          } finally {
                  close();
          }
+         return Integer.parseInt(max_number);
  }
 
 /*public List<String> getStudentInfo(String firstName, String lastName) {
