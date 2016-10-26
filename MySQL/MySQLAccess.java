@@ -25,32 +25,33 @@ private ResultSet resultSet = null;
 private List<List<String>> listOfLists = new ArrayList<List<String>>();
 private List<String> internal;
 
-public List<String> getPreReqData1(String subCode, String cNum) throws Exception {
+public void readDatabase() throws Exception {
          try {
             //This will load the MySQL driver, each DB has its own driver
             Class.forName("org.sqlite.JDBC");
             // Setup the connection with the DB
             connect = DriverManager
-                         .getConnection("jdbc:sqlite:Database/SQLite/CS374.db");
+                         .getConnection("jdbc:sqlite:Database/SQLite/new.db");
             statement = connect.createStatement();
             
-            String sub = ("'" + subCode + "'");
-            String num = ("'%" + cNum + "%'");
+            // String sub = ("'" + subCode + "'");
+            // String num = ("'%" + cNum + "%'");
 
             // System.out.println(sub);
             // System.out.println(num);
             //this function counts how many class a student is taking. 
-            String setSQL = ("SELECT * from course_Preq WHERE Subject_Code="+sub+" AND Course_Number Like"+ num);
+            String setSQL = ("SELECT * from rooms");
 
             resultSet = statement.executeQuery(setSQL);
             
             while (resultSet.next()) {
                 internal = new ArrayList<String>();
-                String preQ = resultSet.getString("Course_Preq_Title");
+                String room_number = resultSet.getString("room_number");
                 
-                internal.add(preQ);
+                internal.add(room_number);
+                System.out.println(room_number);
             }        
-            // System.out.println(preQ);
+             
 
          } catch (Exception e) {
                  // throw e;
@@ -58,12 +59,9 @@ public List<String> getPreReqData1(String subCode, String cNum) throws Exception
          } finally {
                  close();
          }
-
-         return internal;
-
  }
 
-public List<String> getStudentInfo(String firstName, String lastName) {
+/*public List<String> getStudentInfo(String firstName, String lastName) {
     try {
         // This will load the MySQL driver, each DB has its own driver
               Class.forName("org.sqlite.JDBC");
@@ -94,7 +92,7 @@ public List<String> getStudentInfo(String firstName, String lastName) {
      }
      return internal;
      
-}
+}*/
 
 // You need to close the resultSet
 private void close() {
