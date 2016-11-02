@@ -34,7 +34,7 @@ public class MoveClass {
 
 	public void printStudentInClass(){
     	for (int i = 0; i < listOfClassInfo.size(); i+=3) {
-			 System.out.println(listOfClassInfo.get(i+1) + ", " + listOfClassInfo.get(i) + ", " + listOfClassInfo.get(i+2));
+			 System.out.println(listOfClassInfo.get(i+1) + ", " + listOfClassInfo.get(i) + " [" + listOfClassInfo.get(i+2) + "]");
 		}
     }
 
