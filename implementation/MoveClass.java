@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.Map;
 
 public class MoveClass {
-	MySQLAccess access;
+	MySQLAccess access = new MySQLAccess();;
 	private int maxAllowed = 0;
+	private int countSeniors = 0;
 
 	private List<String> listOfClassInfo = new ArrayList<String>();
 
 	public void takeRoom (String roomNumber){
-		access = new MySQLAccess();
 		maxAllowed = access.readDatabase(roomNumber);
 	}
 
@@ -24,8 +24,12 @@ public class MoveClass {
 	}
 
 	public void getClassData(String subCode, String cNumber){
-		access = new MySQLAccess();
 		listOfClassInfo = access.getClassInfo(subCode, cNumber);
+		// for (int i = 2; i < listOfClassInfo.size(); i+=3) {
+		// 	if (listOfClassInfo.get(i)){
+		// 		countSeniors = countSeniors + 1;
+		// 	}
+		// }
 	}
 
 	public void printStudentInClass(){

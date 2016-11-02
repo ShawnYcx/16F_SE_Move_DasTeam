@@ -17,3 +17,7 @@ Feature: Moving Classes to the top 5 next available spot
 	|"316"|	 35|
 	|"317"|	 20|
 	|"318"|	 42|
+
+#	Scenario: Gettting the students information from a specific course
+#		Given the course is "CS", "120"
+#		Then one of the student is "Hunt, Angel"

@@ -14,8 +14,6 @@ import java.util.*;
 import org.sqlite.*;
 
 public class MySQLAccess {
-// private String shawnConnection = "jdbc:mysql://localhost:3306/CS374?user=root&useSSL=false";
-// private String ivanConnection = "jdbc:mysql://localhost/ent?useSSL=false&"+"user=root&password=Narutokurama12";
 
 private Connection connect = null;
 private Statement statement = null;
@@ -27,40 +25,40 @@ private List<List<String>> listOfLists = new ArrayList<List<String>>();
 private List<String> internal;
 private String max_number;
 
-// public int readDatabase(String roomNumber){
-//          try {
+public int readDatabase(String roomNumber){
+         try {
             
-//             //This will load the MySQL driver, each DB has its own driver
-//             Class.forName("org.sqlite.JDBC");
-//             // Setup the connection with the DB
-//             connect = DriverManager
-//                          .getConnection("jdbc:sqlite:Database/SQLite/new.db");
-//             statement = connect.createStatement();
+            //This will load the MySQL driver, each DB has its own driver
+            Class.forName("org.sqlite.JDBC");
+            // Setup the connection with the DB
+            connect = DriverManager
+                         .getConnection("jdbc:sqlite:Database/SQLite/new.db");
+            statement = connect.createStatement();
             
-//             String sub = ("'" + roomNumber + "'");
-//             // String num = ("'%" + cNum + "%'");
+            String sub = ("'" + roomNumber + "'");
+            // String num = ("'%" + cNum + "%'");
 
-//             // System.out.println(sub);
-//             // System.out.println(num);
-//             //this function counts how many class a student is taking. 
-//             String setSQL = ("SELECT * from rooms where room_number =" + sub);
+            // System.out.println(sub);
+            // System.out.println(num);
+            //this function counts how many class a student is taking. 
+            String setSQL = ("SELECT * from rooms where room_number =" + sub);
 
-//             resultSet = statement.executeQuery(setSQL);
+            resultSet = statement.executeQuery(setSQL);
             
-//             while (resultSet.next()) {
-//                 max_number = resultSet.getString("max_number");
-//                 //System.out.println(max_number);
-//             }        
+            while (resultSet.next()) {
+                max_number = resultSet.getString("max_number");
+                //System.out.println(max_number);
+            }        
              
 
-//          } catch (Exception e) {
-//                  // throw e;
-//             e.printStackTrace();
-//          } finally {
-//                  close();
-//          }
-//          return Integer.parseInt(max_number);
-//  }
+         } catch (Exception e) {
+                 // throw e;
+            e.printStackTrace();
+         } finally {
+                 close();
+         }
+         return Integer.parseInt(max_number);
+ }
 
 public List<String> getClassInfo(String subCode, String cNumber) {
     try {
@@ -68,13 +66,13 @@ public List<String> getClassInfo(String subCode, String cNumber) {
               Class.forName("org.sqlite.JDBC");
             // Setup the connection with the DB
             connect = DriverManager
-                         .getConnection("jdbc:sqlite:Database/SQLite/new.db");
+                         .getConnection("jdbc:sqlite:Database/SQLite/CS374.db");
             statement = connect.createStatement();
 
         String setSubjectCode = ("'" + subCode + "'");
         String setCodeNumber = ("'%" + cNumber + "%'");
         //this function counts how many class a student is taking. 
-        String setSQL = ("SELECT First_Name, Last_Name, Subject_Code, Course_Number, Class_Desc from cs374_anon WHERE Subject_Code="+ setSubjectCode + " AND Course_Number like "+ setCodeNumber);
+        String setSQL = ("SELECT First_Name, Last_Name, Class_Desc from cs374_anon WHERE Subject_Code="+ setSubjectCode + " AND Course_Number like "+ setCodeNumber);
 
         resultSet = statement.executeQuery(setSQL);
         internal = new ArrayList<String>();
@@ -86,6 +84,8 @@ public List<String> getClassInfo(String subCode, String cNumber) {
             internal.add(First_Name);
             internal.add(Last_Name);
             internal.add(Class_Desc);
+
+            // System.out.println(internal);
         }
                              
      } catch (Exception e) {
