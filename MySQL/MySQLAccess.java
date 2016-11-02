@@ -58,6 +58,42 @@ public int readDatabase(String roomNumber){
          return Integer.parseInt(max_number);
  }
 
+public List<String> getClassInfo(String subCode, String cNumber) {
+    try {
+        // This will load the MySQL driver, each DB has its own driver
+              Class.forName("org.sqlite.JDBC");
+            // Setup the connection with the DB
+            connect = DriverManager
+                         .getConnection("jdbc:sqlite:Database/SQLite/CS374.db");
+            statement = connect.createStatement();
+
+        String setSubjectCode = ("'" + subCode + "'");
+        String setCodeNumber = ("'%" + cNumber + "%'");
+        //this function counts how many class a student is taking. 
+        String setSQL = ("SELECT First_Name, Last_Name, Class_Desc from cs374_anon WHERE Subject_Code="+ setSubjectCode + " AND Course_Number like "+ setCodeNumber);
+
+        resultSet = statement.executeQuery(setSQL);
+        internal = new ArrayList<String>();
+        while (resultSet.next()) {
+            String First_Name = resultSet.getString("First_Name");
+            String Last_Name = resultSet.getString("Last_Name");
+            String Class_Desc = resultSet.getString("Class_Desc");
+
+            internal.add(First_Name);
+            internal.add(Last_Name);
+            internal.add(Class_Desc);
+        }
+                             
+     } catch (Exception e) {
+             // throw e;
+     } finally {
+             close();
+     }
+     return internal;
+     
+}
+
+
 /*public List<String> getStudentInfo(String firstName, String lastName) {
     try {
         // This will load the MySQL driver, each DB has its own driver

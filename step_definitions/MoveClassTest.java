@@ -25,5 +25,4 @@ public class MoveClassTest {
 	public void theMaximumNumberOfStudentAllowedInThatClassroomIs(int arg1) throws Throwable {
 	    assertEquals(arg1, moveClass.getMaxAllowed()); 
 	}
-
 }
