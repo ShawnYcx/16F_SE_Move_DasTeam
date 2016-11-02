@@ -1,13 +1,14 @@
 package step_definitions;
 import MySQL.MySQLAccess;
 import java.util.Scanner;
-import implementation.MoveClass;
+//import implementation.MoveClass;
+import implementation.GetClass;
 
 public class main{
 	public static void main(String[] args) throws Exception{
-		MySQLAccess access = new MySQLAccess();
-		MoveClass moveclass = new MoveClass();
-		access.readDatabase();
+		GetClass getClasses = new GetClass();
+		//MoveClass moveclass = new MoveClass();
+		//getClasses.readDatabase();
 
 		System.out.println("Select an option to continue.");
 		
@@ -19,16 +20,15 @@ public class main{
 		Scanner options = new Scanner( System.in );
 		String i = options.next();
 		
-		
-		if (i.equals("1")){
-			Scanner user_input = new Scanner( System.in );			
-			System.out.println("Enter Business building classroom number: ");
-			System.out.println("Try typing classroom number 301 or 316.");
-			String roomNumber = user_input.next();
+		// if (i.equals("1")){
+		// 	Scanner user_input = new Scanner( System.in );			
+		// 	System.out.println("Enter Business building classroom number: ");
+		// 	System.out.println("Try typing classroom number 301 or 316.");
+		// 	String roomNumber = user_input.next();
 			
-			moveclass.takeRoom(roomNumber);
-			System.out.println(moveclass.getMaxAllowed());
-		}
+		// 	moveclass.takeRoom(roomNumber);
+		// 	System.out.println(moveclass.getMaxAllowed());
+		// }
 		if (i.equals("2")) {
 
 			Scanner user_input = new Scanner( System.in );
@@ -40,10 +40,10 @@ public class main{
 			System.out.println("Input course number: ");
 			cNumber = user_input.next();
 
-			getStudent.getClassData(subCode, cNumber);
-			if (!getStudent.checkClassExist()){
+			getClasses.getClassData(subCode, cNumber);
+			if (getClasses.checkClassExist()){
 				System.out.println("\nList of students taking [" + subCode + "" + cNumber + "] are: " );
-				getStudent.printStudentInClass();
+				getClasses.printStudentInClass();
 			}else{
 				System.out.println("The class [" + subCode + "" + cNumber + "] does not exist in the database.");
 			}
