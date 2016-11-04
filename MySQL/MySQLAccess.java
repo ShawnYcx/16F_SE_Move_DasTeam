@@ -81,8 +81,8 @@ public List<String> getClassInfo(String subCode, String cNumber) {
             String Last_Name = resultSet.getString("Last_Name");
             String Class_Desc = resultSet.getString("Class_Desc");
 
-            internal.add(First_Name);
             internal.add(Last_Name);
+            internal.add(First_Name);
             internal.add(Class_Desc);
 
             // System.out.println(internal);

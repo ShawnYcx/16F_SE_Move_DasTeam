@@ -12,10 +12,10 @@ public class MoveClass {
 	MySQLAccess access = new MySQLAccess();;
 	private int maxAllowed = 0;
 	private int countSeniors = 0;
-
 	private List<String> listOfClassInfo = new ArrayList<String>();
-
+	
 	public void takeRoom (String roomNumber){
+
 		maxAllowed = access.readDatabase(roomNumber);
 	}
 
@@ -25,17 +25,23 @@ public class MoveClass {
 
 	public void getClassData(String subCode, String cNumber){
 		listOfClassInfo = access.getClassInfo(subCode, cNumber);
-		// for (int i = 2; i < listOfClassInfo.size(); i+=3) {
-		// 	if (listOfClassInfo.get(i)){
-		// 		countSeniors = countSeniors + 1;
-		// 	}
-		// }
+		
 	}
 
 	public void printStudentInClass(){
     	for (int i = 0; i < listOfClassInfo.size(); i+=3) {
-			 System.out.println(listOfClassInfo.get(i+1) + ", " + listOfClassInfo.get(i) + " [" + listOfClassInfo.get(i+2) + "]");
+			 System.out.println(listOfClassInfo.get(i+1) + ", " + listOfClassInfo.get(i) + ", " + listOfClassInfo.get(i+2)); 
 		}
     }
+
+    public String getStudentInfo(String fn, String ln, String classification)
+    {
+    	for (int i = 0; i < listOfClassInfo.size(); i+=3) {
+			 if(listOfClassInfo.get(i).equals(fn) && listOfClassInfo.get(i+1).equals(ln) && listOfClassInfo.get(i+2).equals(classification) )
+			 	return "T";
+		}
+		return "F";
+    }
+    
 
 }
