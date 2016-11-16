@@ -33,12 +33,19 @@ public class MoveClassTest {
 
 	@Then("^one of the student is \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\",\"([^\"]*)\"$")
 	public void oneOfTheStudentIs(String first_name, String last_name, String classification,String result1) throws Throwable {
-	     //moveClass.printStudentInClass();
-	    // assertEquals(first_name, moveClass.getStudentInfo(Integer.parseInt(count)));
-	    // assertEquals(last_name, moveClass.getStudentInfo(Integer.parseInt(count)+1)); 
-	    // assertEquals(classification, moveClass.getStudentInfo(Integer.parseInt(count)+2)); 
 	    String result = moveClass.getStudentInfo(first_name,last_name,classification);
 	    assertEquals(result1, result);
+	}
+
+	@Given("^the student name is \"([^\"]*)\", \"([^\"]*)\", \"([^\"]*)\"$")
+	public void theStudentNameIs(String last_name, String first_name, String termcode) throws Throwable {
+	    moveClass.setStudentClasses(last_name,first_name,termcode);
+	}
+
+	@Then("^the student is taking class \"([^\"]*)\",\"([^\"]*)\",\"([^\"]*)\"\"([^\"]*)\"$")
+	public void theStudentIsTakingClass(String subject_Code, String course_Number, String instructor, String result) throws Throwable {
+	    String resultTemp = moveClass.getStudentClasses(subject_Code,course_Number,instructor);
+	    assertEquals(result,resultTemp);
 	}
 
 }
