@@ -115,7 +115,7 @@ public List<String> getStudentClassesData(String lastName, String firstName, Str
         String setFirstName = ("'%" + firstName + "%'");
         String setTermCode = ("'%" + termcode + "%'");
         //this function counts how many class a student is taking. 
-        String setSQL = ("SELECT Subject_Code, Course_Number, Instructor_Id from cs374_anon WHERE Last_Name ="+ setLastName + 
+        String setSQL = ("SELECT Subject_Code, Course_Number, Instructor_Id,Begin_Time,End_Time,Monday_Ind,Tuesday_Ind,Wednesday_Ind,Thursday_Ind,Friday_Ind from cs374_anon WHERE Last_Name ="+ setLastName + 
             "AND First_Name like" + setFirstName +"AND Term_Code like"+ setTermCode);
        // System.out.println("1");
         //System.out.println(setSQL);//test
@@ -128,13 +128,28 @@ public List<String> getStudentClassesData(String lastName, String firstName, Str
         while (resultSet.next()) {
             //System.out.println("2");
             String Subject_Code = resultSet.getString("Subject_Code");
-            
             String Course_Number = resultSet.getString("Course_Number");
             String Instructor_Id = resultSet.getString("Instructor_Id");
+            String Begin_Time = resultSet.getString("Begin_Time");
+            String End_Time = resultSet.getString("End_Time");
+            String Monday_Ind = resultSet.getString("Monday_Ind");
+            String Tuesday_Ind = resultSet.getString("Tuesday_Ind");
+            String Wednesday_Ind = resultSet.getString("Wednesday_Ind");
+            String Thursday_Ind = resultSet.getString("Thursday_Ind");
+            String Friday_Ind = resultSet.getString("Friday_Ind");
 
             internal2.add(Subject_Code);
             internal2.add(Course_Number);
             internal2.add(Instructor_Id);
+            internal2.add(Begin_Time);
+            internal2.add(End_Time);
+            internal2.add(Monday_Ind);
+            internal2.add(Tuesday_Ind);
+            internal2.add(Wednesday_Ind);
+            internal2.add(Thursday_Ind);
+            internal2.add(Friday_Ind);
+            
+
 
             //System.out.println(internal2);
         }                             

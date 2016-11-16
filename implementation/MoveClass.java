@@ -54,7 +54,7 @@ public class MoveClass {
      public String getStudentClasses(String subject_Code, String course_Number, String instructor)
     {
     	//Cyclomatic Complexity = for loop with if + & + & + 1 = 4
-    	for (int i = 0; i < listOfStudentClasses.size(); i+=3) {
+	  	for (int i = 0; i < listOfStudentClasses.size(); i+=10) {
 			 if(listOfStudentClasses.get(i).equals(subject_Code) && listOfStudentClasses.get(i+1).equals(course_Number) && listOfStudentClasses.get(i+2).equals(instructor) )
 			 	return "T";
 		}
