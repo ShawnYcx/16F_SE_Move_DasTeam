@@ -37,6 +37,7 @@ public class MoveClass {
 
     public String getStudentInfo(String fn, String ln, String classification)
     {
+    	//Cyclomatic Complexity = for loop with if + & + & + 1 = 4
     	for (int i = 0; i < listOfClassInfo.size(); i+=3) {
 			 if(listOfClassInfo.get(i).equals(fn) && listOfClassInfo.get(i+1).equals(ln) && listOfClassInfo.get(i+2).equals(classification) )
 			 	return "T";
@@ -52,7 +53,7 @@ public class MoveClass {
     }
      public String getStudentClasses(String subject_Code, String course_Number, String instructor)
     {
-    	
+    	//Cyclomatic Complexity = for loop with if + & + & + 1 = 4
     	for (int i = 0; i < listOfStudentClasses.size(); i+=3) {
 			 if(listOfStudentClasses.get(i).equals(subject_Code) && listOfStudentClasses.get(i+1).equals(course_Number) && listOfStudentClasses.get(i+2).equals(instructor) )
 			 	return "T";

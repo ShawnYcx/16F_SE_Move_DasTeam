@@ -20,6 +20,8 @@ public class main{
 		Scanner options = new Scanner( System.in );
 		String i = options.next();
 		
+
+		//Cyclomatic Complexity = if + if + 1 = 3
 		if (i.equals("1")){
 			Scanner user_input = new Scanner( System.in );			
 			System.out.println("Enter Business building classroom number: ");
