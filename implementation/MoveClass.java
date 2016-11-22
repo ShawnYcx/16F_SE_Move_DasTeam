@@ -2,6 +2,7 @@
 package implementation;
 
 import MySQL.MySQLAccess;
+import MySQL.QuerySQL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -9,7 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 public class MoveClass {
-	MySQLAccess access = new MySQLAccess();;
+	MySQLAccess access = new MySQLAccess();
+	QuerySQL sql = new QuerySQL();
+
 	private int maxAllowed = 0;
 	private int countSeniors = 0;
 	private List<String> listOfClassInfo = new ArrayList<String>();
@@ -25,8 +28,8 @@ public class MoveClass {
 	}
 
 	public void getClassData(String subCode, String cNumber){
-		listOfClassInfo = access.getClassInfo(subCode, cNumber);
-		//System.out.println(listOfClassInfo);
+		listOfClassInfo = sql.getClassInfo(subCode, cNumber);
+		System.out.println(listOfClassInfo);
 	}
 			
 	public void printStudentInClass(){
@@ -47,7 +50,7 @@ public class MoveClass {
 
     public void setStudentClasses(String last_name,String first_name, String termcode)
     {
-    	listOfStudentClasses = access.getStudentClassesData(last_name,first_name,termcode);
+    	listOfStudentClasses = sql.getStudentClassesData(last_name,first_name,termcode);
     	System.out.println(listOfStudentClasses);
 
     }
