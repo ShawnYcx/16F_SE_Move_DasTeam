@@ -7,7 +7,10 @@ import java.util.*;
 public class QuerySQL {
 
 	MySQLAccess access = new MySQLAccess();
-	private List<String> columnsToGet = new ArrayList<String>();;
+	private List<String> columnsToGet = new ArrayList<String>();
+	private int sizeOfCurrentClass = 0;
+	private List<String> tMWF = new ArrayList<String>();
+	private List<String> tTR = new ArrayList<String>();
 	
 	public List<String> getClassInfo(String subCode, String cNumber){
 		List<String> columns;
@@ -21,12 +24,14 @@ public class QuerySQL {
 		columnsToGet.add("firstName");
 		columnsToGet.add("Class_Desc");
 
-		columns = access.getDataFromSQL(sqlCMD, columnsToGet); 
-		System.out.println(columns);
+		columns = access.getDataFromSQL(sqlCMD, columnsToGet);
+		sizeOfCurrentClass = columns.size();
+
 		return columns;
 	}
 
 	public List<String> getStudentClassesData(String lastName, String firstName, String termcode){
+
 		List<String> columns;
 		String setLastName = ("'" + lastName + "'"); 
         String setFirstName = ("'%" + firstName + "%'");
@@ -51,6 +56,54 @@ public class QuerySQL {
 		return columns;
 	}	
 	
+	public void getClassDays(String daysToGet, String timeToget){
+
+		List<String> columns;
+		String sqlCMD;
+		String setBeginTime = ("'%" + timeToget + "%'");
+
+		if (daysToGet.equals("MWF")){
+			sqlCMD = ("SELECT Room_Code from cs374_anon WHERE Monday_Ind = 'M' AND Wednesday_Ind like '%W%' AND Friday_Ind like '%F%' AND Begin_Time like "+ setBeginTime + " group by Room_Code");
+		}
+		else if (daysToGet.equals("TR")){
+			sqlCMD = ("SELECT Room_Code from cs374_anon WHERE Tuesday_Ind = 'T' AND Thursday_Ind like '%R%' AND Begin_Time like "+ setBeginTime + " group by Room_Code");
+		}
+		else {
+			sqlCMD = ("SELECT Room_Code from cs374_anon WHERE Friday_Ind = '' AND Wednesday_Ind like '%W%' AND Monday_Ind like '%M%' AND Begin_Time like "+ setBeginTime + " group by Room_Code");
+		}
+
+		columnsToGet.add("Room_Number");
+		columns = access.getDataFromSQL(sqlCMD, columnsToGet); 
+
+		// return columns;
+	}
+
+	public List<String> getRoomsThatFit(String numberOfStudents){
+
+		String max = ("'" + numberOfStudents + "'");
+        //this function counts how many class a student is taking. 
+        String sqlCMD = ("SELECT * from rooms where max_number >= " + max);
+
+		return access.readDatabase(sqlCMD, room); 
+	}
+
+	// Work in progress for this function
+	private List<boolean> getMWF(List<String> columns) {
+		List<boolean> availableRooms = new ArrayList<String>();
+		for (int i = 0; i < tMWF.size(); i++) {
+			String timeString = Integer.toString(tMWF.get(i));
+
+			if (columns.contains(timeString)){
+				availableRooms.add(true);
+			}else {
+				availableRooms.add(false);
+			}
+		}
+	}
+
+	private List<boolean> checkOpenRooms(List<String> columns) {
+
+	}
 }
 
 
