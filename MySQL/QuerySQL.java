@@ -25,7 +25,7 @@ public class QuerySQL {
 		columnsToGet.add("Class_Desc");
 
 		columns = access.getDataFromSQL(sqlCMD, columnsToGet);
-		sizeOfCurrentClass = columns.size();
+		sizeOfCurrentClass = columns.size();//this is count student
 
 		return columns;
 	}
@@ -42,6 +42,30 @@ public class QuerySQL {
 
 		columnsToGet.add("Subject_Code");
 		columnsToGet.add("Course_Number");
+		columnsToGet.add("Instructor_Id");
+		columnsToGet.add("Begin_Time");
+		columnsToGet.add("End_Time");
+		columnsToGet.add("Monday_Ind");
+		columnsToGet.add("Tuesday_Ind");
+		columnsToGet.add("Wednesday_Ind");
+		columnsToGet.add("Thursday_Ind");
+		columnsToGet.add("Friday_Ind");
+
+		columns = access.getDataFromSQL(sqlCMD, columnsToGet); 
+
+		return columns;
+	}	
+
+	public List<String> getProfessorSchedule(String name, String termcode){
+
+		List<String> columns;
+		String setName = ("'" + name + "'"); 
+        String setTermCode = ("'%" + termcode + "%'");
+
+        String sqlCMD = ("SELECT Instructor_Name, Instructor_ID, Instructor_Id,Begin_Time,End_Time,Monday_Ind,Tuesday_Ind,Wednesday_Ind,Thursday_Ind,Friday_Ind from cs374_anon WHERE Instructor_Name ="+ setName + 
+           "AND Term_Code like"+ setTermCode);
+
+		columnsToGet.add("Instructor_Name");
 		columnsToGet.add("Instructor_Id");
 		columnsToGet.add("Begin_Time");
 		columnsToGet.add("End_Time");
