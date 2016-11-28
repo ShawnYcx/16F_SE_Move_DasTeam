@@ -1,3 +1,7 @@
-javac -cp "jars/*:." step_definitions/main.java implementation/MoveClass.java MySQL/MySQLAccess.java
+javac -cp "jars/*:." MySQL/MySQLAccess.java \
+                     implementation/MoveClass.java \
+                     MySQL/QuerySQL.java \
+                     step_definitions/main.java
+
 
 java -cp "jars/*:." step_definitions/main

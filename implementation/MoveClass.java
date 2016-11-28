@@ -1,35 +1,29 @@
 //CS374 DasTeam: Shawn scy12a, Steven sxq13a, Ivan ioa13a.
 package implementation;
 
-import MySQL.MySQLAccess;
 import MySQL.QuerySQL;
 import java.util.*;
+import java.util.Scanner;
 
 public class MoveClass {
-	MySQLAccess access = new MySQLAccess();
 	QuerySQL sql = new QuerySQL();
 
-	private int maxAllowed = 0;
+	private int sizeOfCurrentClass = 0;
 	private int countSeniors = 0;
-	private List<String> tMWF = new ArrayList<String>();
-	private List<String> tTR = new ArrayList<String>();
-	private List<String> tMW = new ArrayList<String>();
+	private List<String> classes = new ArrayList<String>();
 	private List<String> listOfClassInfo = new ArrayList<String>();
 	private List<String> listOfStudentClasses = new ArrayList<String>(); // this store all the classes a student has taken. 
 
 	// Change to CRN soon
 	public void getClassData(String subCode, String cNumber){
 		listOfClassInfo = sql.getClassInfo(subCode, cNumber);
+		sizeOfCurrentClass = listOfClassInfo.size();
 	}
 
     public void setStudentClasses(String last_name,String first_name, String termcode)
     {
     	listOfStudentClasses = sql.getStudentClassesData(last_name, first_name, termcode);
     }
-
-	public List<String> findRoomsThatFit (String numberOfStudents){
-		 return sql.getMaxStudentInRoom(numberOfStudents);
-	}
 
 	public int getPriority (){
 		int numberOfSeniors = 0;
@@ -40,9 +34,144 @@ public class MoveClass {
 		}
 		return numberOfSeniors;
 	}
+	
+	public void showOpenRooms(String daysToGet, String timeToget) {
+		List<String> tempArr = new ArrayList<String>();
+
+		Map<String, Boolean> tempT = new HashMap<String, Boolean>();
+
+		tempArr = sql.getRoomsThatFit(sizeOfCurrentClass);
+		classes = sql.getClassDays(daysToGet, timeToget);
+	
+		for (int i = 0; i < tempArr.size(); i++) {
+			String roomAtIndex = tempArr.get(i);
+			if (classes.contains(roomAtIndex)){
+				tempT.put(roomAtIndex, true);
+			} else {
+				tempT.put(roomAtIndex, false);
+			}
+		}
+			findRoomsThatFit(tempT, daysToGet);
+	}
+
+	// This function loops though the Map and display the rooms that has false as value
+	public void findRoomsThatFit(Map<String, Boolean> displayRooms, String daysToGet) {
+		int counter = 0;
+
+		for (Map.Entry<String, Boolean> entry : displayRooms.entrySet())
+		{
+			// output if true and room fits the number of students in the current class
+			if ( (entry.getValue() == true) ){
+				counter++;
+			}
+		}
+
+		if (counter != displayRooms.size()){
+			List<String> temp = new ArrayList<String>(); 
+			temp = sql.getRoomsThatFit(sizeOfCurrentClass);
+			System.out.println(sizeOfCurrentClass);
+			// Start listing rooms
+			System.out.println("Here are some empty days on the selected date.");
+			System.out.println("Rooms listed below are the current available rooms.");
+			
+			int i = 1;
+			for (Map.Entry<String, Boolean> entry : displayRooms.entrySet())
+			{
+				// output if true and room fits the number of students in the current class
+				if ( (entry.getValue() == false) && (temp.contains(entry.getValue())) ){
+					System.out.println( Integer.toString(i) + ": " + entry.getKey());
+					i++;
+				} else {}
+			}
+
+			Scanner options = new Scanner( System.in );
+			String input = options.next();
+		} else {
+			System.out.println("Sorry! There are no rooms available for the selected time.");
+			System.out.println("Please select another room");
+			
+			Scanner options = new Scanner( System.in );
+			String input = options.next();
+			showOpenRooms(input, daysToGet);
+		}
+
+	}
+
+		public int showTimeSlots(String input) {
+		System.out.println("Which time slot would you want to move the class to?");
+		if ((input.equals("1")) || (input.equals("MWF"))){
+				System.out.print("[");
+				int time = 8;
+				for (int i = 0; i < 8; i++) {
+					if (time != 11 ){ // Don't show classes at 11am
+						if (time >= 13)
+							time -= 12; // Show times at HH:MM format instead of 24Hrs 
+
+						System.out.print(time + ":" + "00");
+						System.out.print(", ");
+					}
+					time++;
+				}
+				System.out.print(4 + ":" +"00");
+				System.out.println("]");
+
+				return 1;
+		} else if ((input.equals("2")) || (input.equals("TR"))){
+				int time = 8;
+				System.out.print("[");
+				System.out.print(time + ":00,");
+				time++;
+				System.out.print(time + ":30,");
+				
+				time = 12;
+				for (int i = 2; i < 6; i++) {
+					if (time >= 13)
+						time -= 12; // Show times at HH:MM format instead of 24Hrs 
+					if (time == 4){
+						System.out.print(time + ":30");
+						break;
+					}
+					if (i % 2 == 0) {
+						System.out.print(time + ":00,");
+						time++;
+					} else {
+						System.out.print(time + ":30,");
+						time+=2;
+					}
+					
+				}
+				
+				System.out.println("]");
 
 
+				return 2;
+		} else if ((input.equals("3")) || (input.equals("MW"))){
+				System.out.print("[");
+				int time = 8;
+				for (int i = 0; i < 8; i++) {
+					if (time != 11 ){ // Don't show classes at 11am
+						if (time >= 13)
+							time -= 12; // Show times at HH:MM format instead of 24Hrs 
 
+						System.out.print(time + ":" + "00");
+						System.out.print(", ");
+					}
+					time++;
+				}
+				System.out.print(4 + ":" +"00");
+				System.out.println("]");
+				return 3;
+
+		} else if (input.toUpperCase().equals("QUIT")){
+			return -2;
+		} else {
+			System.out.println("Unknown input. Please try again.");
+			System.out.println("Example: type in \"1\" or \" MWF \"");
+			return -1;
+		}
+	}
+
+;
   //   public void saveClassTime()
   //   {
   //   	/*

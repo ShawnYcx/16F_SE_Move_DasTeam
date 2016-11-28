@@ -5,31 +5,65 @@ import implementation.MoveClass;
 // import implementation.GetClass;
 
 public class main{
+
 	public static void main(String[] args) throws Exception{
 		// GetClass getClasses = new GetClass();
-		MoveClass moveclass = new MoveClass();
-		Scanner options, input;
+		MoveClass moveClass = new MoveClass();
+		Scanner options = new Scanner( System.in );
+		String input, input2;
 		//getClasses.readDatabase();
 
 		System.out.println("Select an option to continue.");
 		
 		System.out.println("Enter the CRN of the class you would like to move: ");
 
-		options = new Scanner( System.in );
 		input = options.next();
+		input2 = options.next();
 		
-		moveclass.getClassData(i);
+		moveClass.getClassData(input, input2);
 		// Current class time [ACCT120] is on [MWF] at[3:00pm] in room 111
 
 		System.out.println("Which day would you want to move the class to?");
+		System.out.println("Example: type in \"1\" or \" MWF \"");
 		System.out.println("1: MWF");
 		System.out.println("2: TR");
 		System.out.println("3: MW");
+		System.out.println("4: Quit");
 
-		options = new Scanner( System.in );
 		input = options.next();
 
+		int chosen = 0;
+		if (input.equals("4") || input.toUpperCase().equals("QUIT") ){
+			System.out.println("The application has been terminated.");
+		}
+		else {
+			while ( true ) {
+				chosen = moveClass.showTimeSlots(input);
+				if (chosen == 1){
+					input = options.next();
+					moveClass.showOpenRooms("MWF", input);
+					break;
+				} else if (chosen == 2){
 		
+					input = options.next();
+					moveClass.showOpenRooms("TR", input);
+					break;
+					
+				} else if (chosen == 3){
+		
+					input = options.next();
+					moveClass.showOpenRooms("MW", input);
+					break;
+				} else if (chosen == -1){
+					input = options.next();
+				} else {
+					break;
+				}
+			}
+		}
+
+		
+
 
 		// //Cyclomatic Complexity = if + if + 1 = 3
 		// if (i.equals("1")){
@@ -38,8 +72,8 @@ public class main{
 		// 	System.out.println("Try typing classroom number 301 or 316.");
 		// 	String roomNumber = user_input.next();
 			
-		// 	moveclass.takeRoom(roomNumber);
-		// 	System.out.println("Maximum students allowed in room ["+ roomNumber +"]: " + moveclass.getMaxAllowed());
+		// 	moveClass.takeRoom(roomNumber);
+		// 	System.out.println("Maximum students allowed in room ["+ roomNumber +"]: " + moveClass.getMaxAllowed());
 		// }
 		// if (i.equals("2")) {
 
@@ -52,11 +86,11 @@ public class main{
 		// 	System.out.println("Input course number: ");
 		// 	cNumber = user_input.next();
 
-		// 	moveclass.getClassData(subCode, cNumber);
+		// 	moveClass.getClassData(subCode, cNumber);
 
 		// 	System.out.println("\nList of students taking [" + subCode + "" + cNumber + "] are: " );
-		// 	moveclass.printStudentInClass();
-		// 	// if (moveclass.checkClassExist()){
+		// 	moveClass.printStudentInClass();
+		// 	// if (moveClass.checkClassExist()){
 				
 		// 	// }else{
 		// 		// System.out.println("The class [" + subCode + "" + cNumber + "] does not exist in the database.");
