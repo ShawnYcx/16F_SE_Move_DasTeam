@@ -25,7 +25,7 @@ public class MoveClass {
     	listOfStudentClasses = sql.getStudentClassesData(last_name, first_name, termcode);
     }
 
-	public int getPriority (){
+	public int getPriority (){// what about other grades? 
 		int numberOfSeniors = 0;
 		for (int i = 0; i < listOfClassInfo.size(); i+=3) {
 			if (listOfClassInfo.get(i+2).equals("Senior")){
