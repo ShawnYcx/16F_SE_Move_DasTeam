@@ -18,9 +18,9 @@ public class main{
 		System.out.println("Enter the CRN of the class you would like to move: ");
 
 		input = options.next();
-		input2 = options.next();
+		//input2 = options.next();
 		
-		moveClass.getClassData(input, input2);
+		moveClass.getClassData(input);
 		// Current class time [ACCT120] is on [MWF] at[3:00pm] in room 111
 
 		System.out.println("Which day would you want to move the class to?");

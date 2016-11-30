@@ -15,8 +15,8 @@ public class MoveClass {
 	private List<String> listOfStudentClasses = new ArrayList<String>(); // this store all the classes a student has taken. 
 
 	// Change to CRN soon
-	public void getClassData(String subCode, String cNumber){
-		listOfClassInfo = sql.getClassInfo(subCode, cNumber);
+	public void getClassData(String crn){
+		listOfClassInfo = sql.getClassInfo(crn);
 		sizeOfCurrentClass = listOfClassInfo.size();
 	}
 

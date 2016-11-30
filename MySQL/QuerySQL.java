@@ -9,13 +9,11 @@ public class QuerySQL {
 
 	private List<String> columnsToGet = new ArrayList<String>();
 	
-	public List<String> getClassInfo(String subCode, String cNumber){
+	public List<String> getClassInfo(String crn){
 		List<String> columns;
-		String setSubjectCode = ("'" + subCode + "'");
-        String setCodeNumber = ("'%" + cNumber + "%'");
+        String setCRN = ("'%" + crn + "%'");
 
-		String sqlCMD = ("SELECT First_Name, Last_Name, Class_Desc from cs374_anon WHERE Subject_Code="
-            + setSubjectCode + " AND Course_Number like "+ setCodeNumber);
+		String sqlCMD = ("SELECT First_Name, Last_Name, Class_Desc from cs374_anon WHERE CRN=" + crn);
 
 		columnsToGet.add("First_Name");
 		columnsToGet.add("Last_Name");
