@@ -23,15 +23,14 @@ public class QuerySQL {
 		return columns;
 	}
 
-	public List<String> getStudentClassesData(String lastName, String firstName, String termcode){
+	public List<String> getStudentClassesData(String lastName, String firstName){
 
 		List<String> columns;
 		String setLastName = ("'" + lastName + "'"); 
         String setFirstName = ("'%" + firstName + "%'");
-        String setTermCode = ("'%" + termcode + "%'");
 
         String sqlCMD = ("SELECT Subject_Code, Course_Number, Instructor_Id,Begin_Time,End_Time,Monday_Ind,Tuesday_Ind,Wednesday_Ind,Thursday_Ind,Friday_Ind from cs374_anon WHERE Last_Name ="+ setLastName + 
-            "AND First_Name like" + setFirstName +"AND Term_Code like"+ setTermCode);
+            "AND First_Name like" + setFirstName);
 
 		columnsToGet.add("Subject_Code");
 		columnsToGet.add("Course_Number");
@@ -49,14 +48,12 @@ public class QuerySQL {
 		return columns;
 	}	
 
-	public List<String> getProfessorSchedule(String name, String termcode){
+	public List<String> getProfessorSchedule(String name){
 
 		List<String> columns;
-		String setName = ("'" + name + "'"); 
-        String setTermCode = ("'%" + termcode + "%'");
+		String setName = ("'" + name + "'");
 
-        String sqlCMD = ("SELECT Instructor_Name, Instructor_ID, Instructor_Id,Begin_Time,End_Time,Monday_Ind,Tuesday_Ind,Wednesday_Ind,Thursday_Ind,Friday_Ind from cs374_anon WHERE Instructor_Name ="+ setName + 
-           "AND Term_Code like"+ setTermCode);
+        String sqlCMD = ("SELECT Instructor_Name, Instructor_ID, Instructor_Id,Begin_Time,End_Time,Monday_Ind,Tuesday_Ind,Wednesday_Ind,Thursday_Ind,Friday_Ind from cs374_anon WHERE Instructor_Name ="+ setName);
 
 		columnsToGet.add("Instructor_Name");
 		columnsToGet.add("Instructor_Id");
@@ -89,7 +86,7 @@ public class QuerySQL {
 			sqlCMD = ("SELECT Room_Code, Begin_Time from cs374_anon WHERE Friday_Ind = '' AND Wednesday_Ind like '%W%' AND Monday_Ind like '%M%' AND Begin_Time like "+ setBeginTime + " and Bldg_Code like 'MBB' group by Room_Code");
 		}
 
-		columnsToGet.add("Room_Number");
+		columnsToGet.add("Room_Code");
 		columns = access.getDataFromSQL(sqlCMD, columnsToGet);
 
 		return columns;
@@ -109,11 +106,3 @@ public class QuerySQL {
 		return access.readDatabase(sqlCMD);
 	}
 }
-
-
-
-
-
-
-
-

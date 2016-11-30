@@ -20,9 +20,10 @@ public class MoveClass {
 		sizeOfCurrentClass = listOfClassInfo.size();
 	}
 
-    public void setStudentClasses(String last_name,String first_name, String termcode)
+    public void setStudentClasses(String last_name,String first_name)
     {
-    	listOfStudentClasses = sql.getStudentClassesData(last_name, first_name, termcode);
+    	listOfStudentClasses = sql.getStudentClassesData(last_name, first_name);
+
     }
 
 	public int getPriority (){// what about other grades? 
@@ -42,6 +43,7 @@ public class MoveClass {
 
 		tempArr = sql.getRoomsThatFit(sizeOfCurrentClass);
 		classes = sql.getClassDays(daysToGet, timeToget);
+		//System.out.println(classes);
 	
 		for (int i = 0; i < tempArr.size(); i++) {
 			String roomAtIndex = tempArr.get(i);
@@ -69,7 +71,7 @@ public class MoveClass {
 		if (counter != displayRooms.size()){
 			List<String> temp = new ArrayList<String>(); 
 			temp = sql.getRoomsThatFit(sizeOfCurrentClass);
-			System.out.println(sizeOfCurrentClass);
+			//System.out.println(sizeOfCurrentClass);
 			// Start listing rooms
 			System.out.println("Here are some empty days on the selected date.");
 			System.out.println("Rooms listed below are the current available rooms.");

@@ -8,11 +8,6 @@ DROP TABLE IF EXISTS `rooms`;
 CREATE TABLE `rooms` (
   `room_number` varchar(5) DEFAULT NULL,
   `max_number` int(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+);
 
---
--- Dumping data for table `rooms`
---
-
-INSERT INTO `rooms` VALUES ('301',82),('302',18),('314',24),('315',40),('316',35),('317',20),('318',42);
+INSERT INTO `rooms` VALUES ('115',58),('116',38),('117',53),('118',54),('201',140),('214',20),('215',45),('216',45),(24),('315',40),('316',35),('317',20),('318',42);'217',45),('218',40),('301',82),('302',18),('314',
