@@ -20,9 +20,8 @@ public class MoveClass {
 	public void getClassData(String crn){
 		listOfClassInfo = sql.getClassInfo(crn);
 		sizeOfCurrentClass = listOfClassInfo.size();
-
 		professorName = sql.getProfName(crn);
-		System.out.println("professorname 1 : "+ professorName);
+		// System.out.println("professorname 1 : "+ professorName);
 
 		//professorSchedule = sql.getProfessorSchedule(professorName.get(0), professorName.get(1));
 
