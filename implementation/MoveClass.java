@@ -11,6 +11,9 @@ public class MoveClass {
 	private int sizeOfCurrentClass = 0;
 	private int countSeniors = 0;
 	private List<String> classes = new ArrayList<String>();
+	private List<String> professorName = new ArrayList<String>();// this gets professor's name and term code
+	private List<String> professorSchedule = new ArrayList<String>();
+	private List<String> newProfessorSchedule = new ArrayList<String>();
 	private List<String> listOfClassInfo = new ArrayList<String>();
 	private List<String> listOfStudentClasses = new ArrayList<String>(); // this store all the classes a student has taken. 
 
@@ -18,12 +21,49 @@ public class MoveClass {
 	public void getClassData(String crn){
 		listOfClassInfo = sql.getClassInfo(crn);
 		sizeOfCurrentClass = listOfClassInfo.size();
+		professorName = sql.getProfName(crn);
+		//System.out.println("professorname : "+ professorName.get(0)+ professorName.get(1));
+		
+		getProfessorSchedule();
 	}
 
-    public void setStudentClasses(String last_name,String first_name)
+    public void setStudentClasses(String last_name,String first_name, String termcode)
     {
-    	listOfStudentClasses = sql.getStudentClassesData(last_name, first_name);
+    	listOfStudentClasses = sql.getStudentClassesData(last_name, first_name, termcode);
+    	//System.out.println("ClassData: "+ listOfStudentClasses);
+		
+    }
 
+    public void getProfessorSchedule()
+    {
+    	professorSchedule = sql.getProfessorSchedule(professorName.get(0), professorName.get(1));
+		// System.out.println("professorname : "+ professorSchedule);
+		// System.out.println("\n");
+		for (int i = 0; i< professorSchedule.size(); i+=7)
+		{
+			StringBuilder temp= new StringBuilder();
+			for(int count = i; count<i + 5; count++)
+			{
+				temp.append(professorSchedule.get(count));
+			}
+			//System.out.println("temp : "+ temp +"\n");
+			
+			newProfessorSchedule.add(temp.toString());
+			newProfessorSchedule.add(professorSchedule.get(i+5));
+			newProfessorSchedule.add(professorSchedule.get(i+6));
+		}
+		// System.out.println("professorSchedule : "+ newProfessorSchedule);
+		// System.out.println("\n");
+    }
+
+    public String checkProfCollision( String daysToGet, String timeToget)
+    {
+    	for(int i = 0; i < newProfessorSchedule.size() ; i +=3)
+    	{
+    		if(daysToGet == newProfessorSchedule.get(i) && timeToget == newProfessorSchedule.get(i++))
+    			return "True";
+    	}
+    	return "False";
     }
 
 	public int getPriority (){// what about other grades? 
@@ -36,14 +76,15 @@ public class MoveClass {
 		return numberOfSeniors;
 	}
 	
+	
+	
 	public void showOpenRooms(String daysToGet, String timeToget) {
 		List<String> tempArr = new ArrayList<String>();
+		
 
 		Map<String, Boolean> tempT = new HashMap<String, Boolean>();
-
 		tempArr = sql.getRoomsThatFit(sizeOfCurrentClass);
 		classes = sql.getClassDays(daysToGet, timeToget);
-		//System.out.println(classes);
 	
 		for (int i = 0; i < tempArr.size(); i++) {
 			String roomAtIndex = tempArr.get(i);
@@ -71,7 +112,7 @@ public class MoveClass {
 		if (counter != displayRooms.size()){
 			List<String> temp = new ArrayList<String>(); 
 			temp = sql.getRoomsThatFit(sizeOfCurrentClass);
-			//System.out.println(sizeOfCurrentClass);
+			System.out.println(sizeOfCurrentClass);
 			// Start listing rooms
 			System.out.println("Here are some empty days on the selected date.");
 			System.out.println("Rooms listed below are the current available rooms.");
@@ -174,6 +215,8 @@ public class MoveClass {
 	}
 
 ;
+
+
   //   public void saveClassTime()
   //   {
   //   	/*

@@ -23,6 +23,13 @@ public class main{
 		moveClass.getClassData(input);
 		// Current class time [ACCT120] is on [MWF] at[3:00pm] in room 111
 
+
+//0-----------------------example
+		// String result = moveClass.checkProfCollision("M","1500");
+		// System.out.println(result);
+//------------------------end
+
+
 		System.out.println("Which day would you want to move the class to?");
 		System.out.println("Example: type in \"1\" or \" MWF \"");
 		System.out.println("1: MWF");
