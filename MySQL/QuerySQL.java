@@ -9,9 +9,10 @@ public class QuerySQL {
 	List<String> columns = new ArrayList<String>();
 	List<String> columnsToGet = new ArrayList<String>();
 	
+	
 	public List<String> getClassInfo(String crn){
 		deallocList();
-
+        
         String setCRN = ("'" + crn + "'");
 
 		String sqlCMD = ("SELECT First_Name, Last_Name, Class_Desc from cs374_anon WHERE CRN=" + crn);
@@ -42,12 +43,11 @@ public class QuerySQL {
 	}
 
 	public List<String> getProfessorSchedule(String name, String termcode){
-		deallocList();
 
 		String setName = ("'" + name + "'"); 
         String setTermCode = ("'%" + termcode + "%'");
 
-        String sqlCMD = ("SELECT Monday_Ind,Tuesday_Ind,Wednesday_Ind,Thursday_Ind,Friday_Ind,Begin_Time,End_Time, CRN from cs374_anon WHERE Instructor_Name ="+ setName + 
+        String sqlCMD = ("SELECT Monday_Ind,Tuesday_Ind,Wednesday_Ind,Thursday_Ind,Friday_Ind,Begin_Time,End_Time, Instructor_Name, CRN from cs374_anon WHERE Instructor_Name ="+ setName + 
            "AND Term_Code like"+ setTermCode + "GROUP BY CRN"); 
 
 		columnsToGet.add("Monday_Ind");
@@ -56,40 +56,13 @@ public class QuerySQL {
 		columnsToGet.add("Thursday_Ind");
 		columnsToGet.add("Friday_Ind");
 		columnsToGet.add("Begin_Time");
+		columnsToGet.add("Instructor_Name");
 		columnsToGet.add("End_Time");
 
 		columns = access.getDataFromSQL(sqlCMD, columnsToGet); 
 
 		return columns;
 	}	
-
-	// back up getProfessorSchedule
-	
-	// public List<String> getProfessorSchedule(String name, String termcode){
-
-	// 	List<String> columns;
-	// 	String setName = ("'" + name + "'"); 
- //        String setTermCode = ("'%" + termcode + "%'");
-
- //        String sqlCMD = ("SELECT Instructor_Name, Instructor_ID, Instructor_Id,Begin_Time,End_Time,Monday_Ind,Tuesday_Ind,Wednesday_Ind,Thursday_Ind,Friday_Ind from cs374_anon WHERE Instructor_Name ="+ setName + 
- //           "AND Term_Code like"+ setTermCode);
-
-	// 	columnsToGet.add("Instructor_Name");
-	// 	columnsToGet.add("Instructor_Id");
-	// 	columnsToGet.add("Begin_Time");
-	// 	columnsToGet.add("End_Time");
-	// 	columnsToGet.add("Monday_Ind");
-	// 	columnsToGet.add("Tuesday_Ind");
-	// 	columnsToGet.add("Wednesday_Ind");
-	// 	columnsToGet.add("Thursday_Ind");
-	// 	columnsToGet.add("Friday_Ind");
-
-	// 	columns = access.getDataFromSQL(sqlCMD, columnsToGet); 
-
-	// 	return columns;
-	// }
-
-	//end
 
 	public List<String> getStudentClassesData(String lastName, String firstName, String termcode){
 		deallocList();
@@ -98,19 +71,19 @@ public class QuerySQL {
         String setFirstName = ("'%" + firstName + "%'");
         String setTermCode = ("'%" + termcode + "%'");
 
-        String sqlCMD = ("SELECT Subject_Code, Course_Number, Instructor_Id,Begin_Time,End_Time,Monday_Ind,Tuesday_Ind,Wednesday_Ind,Thursday_Ind,Friday_Ind from cs374_anon WHERE Last_Name ="+ setLastName + 
+        String sqlCMD = ("SELECT Subject_Code, Course_Number, Instructor_Id,Monday_Ind,Tuesday_Ind,Wednesday_Ind,Thursday_Ind,Friday_Ind,Begin_Time,End_Time from cs374_anon WHERE Last_Name ="+ setLastName + 
             "AND First_Name like" + setFirstName +"AND Term_Code like"+ setTermCode);
 
 		columnsToGet.add("Subject_Code");
 		columnsToGet.add("Course_Number");
 		columnsToGet.add("Instructor_Id");
-		columnsToGet.add("Begin_Time");
-		columnsToGet.add("End_Time");
 		columnsToGet.add("Monday_Ind");
 		columnsToGet.add("Tuesday_Ind");
 		columnsToGet.add("Wednesday_Ind");
 		columnsToGet.add("Thursday_Ind");
 		columnsToGet.add("Friday_Ind");
+		columnsToGet.add("Begin_Time");
+		columnsToGet.add("End_Time");
 
 		columns = access.getDataFromSQL(sqlCMD, columnsToGet); 
 
@@ -121,7 +94,7 @@ public class QuerySQL {
 	
 	public List<String> getClassDays(String daysToGet, String timeToget){
 		deallocList();
-
+		
 		String sqlCMD;
 		String setBeginTime = ("'%" + timeToget + "%'");
 
