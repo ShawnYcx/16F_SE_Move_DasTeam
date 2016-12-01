@@ -22,8 +22,8 @@ public class QuerySQL {
 
 		columns = access.getDataFromSQL(sqlCMD, columnsToGet);
 
-		System.out.println("getClassInfo: " + columns);
-		System.out.println("\n");
+		//System.out.println("getClassInfo: " + columns);
+		//System.out.println("\n");
 		return columns;
 	}
 
@@ -31,14 +31,13 @@ public class QuerySQL {
 		deallocList();
 
         String setCRN = ("'" + crn + "'");
+
         String sqlCMD = ("SELECT Instructor_Name, Term_Code from cs374_anon WHERE CRN=" + crn + " group by CRN");
 		
 		columnsToGet.add("Instructor_Name"); // john homer
 		columnsToGet.add("Term_Code");
 
 		columns = access.getDataFromSQL(sqlCMD, columnsToGet);
-		System.out.println("getProfName: " + columns);
-		System.out.println("\n");
 		return columns;
 	}
 
@@ -47,14 +46,10 @@ public class QuerySQL {
 
 		String setName = ("'" + name + "'"); 
         String setTermCode = ("'%" + termcode + "%'");
-        //System.out.println(name);
-       // System.out.println(termcode);
 
-        String sqlCMD = ("SELECT Instructor_Name, Instructor_ID, Monday_Ind,Tuesday_Ind,Wednesday_Ind,Thursday_Ind,Friday_Ind,Begin_Time,End_Time, CRN from cs374_anon WHERE Instructor_Name ="+ setName + 
-           "AND Term_Code like"+ setTermCode + "GROUP BY CRN");//use CRN to get rid of 
+        String sqlCMD = ("SELECT Monday_Ind,Tuesday_Ind,Wednesday_Ind,Thursday_Ind,Friday_Ind,Begin_Time,End_Time, CRN from cs374_anon WHERE Instructor_Name ="+ setName + 
+           "AND Term_Code like"+ setTermCode + "GROUP BY CRN"); 
 
-		columnsToGet.add("Instructor_Name");
-		columnsToGet.add("Instructor_Id");
 		columnsToGet.add("Monday_Ind");
 		columnsToGet.add("Tuesday_Ind");
 		columnsToGet.add("Wednesday_Ind");
