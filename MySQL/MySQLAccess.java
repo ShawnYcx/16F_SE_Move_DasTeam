@@ -61,6 +61,7 @@ public class MySQLAccess {
                     // Getting column names from the List and save to Column Data                
                     String columnData = resultSet.getString(columnsToGet.get(i));
                     internal.add(columnData);
+                    //System.out.println("1: " +internal);
                 }
             }
                                  

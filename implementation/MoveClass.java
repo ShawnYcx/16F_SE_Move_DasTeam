@@ -11,6 +11,8 @@ public class MoveClass {
 	private int sizeOfCurrentClass = 0;
 	private int countSeniors = 0;
 	private List<String> classes = new ArrayList<String>();
+	private List<String> professorName = new ArrayList<String>();// this gets professor's name and term code
+	private List<String> professorSchedule = new ArrayList<String>();
 	private List<String> listOfClassInfo = new ArrayList<String>();
 	private List<String> listOfStudentClasses = new ArrayList<String>(); // this store all the classes a student has taken. 
 
@@ -18,11 +20,20 @@ public class MoveClass {
 	public void getClassData(String crn){
 		listOfClassInfo = sql.getClassInfo(crn);
 		sizeOfCurrentClass = listOfClassInfo.size();
+
+		professorName = sql.getProfName(crn);
+		System.out.println("professorname 1 : "+ professorName);
+
+		//professorSchedule = sql.getProfessorSchedule(professorName.get(0), professorName.get(1));
+
+		//System.out.println("classInfo: "+ listOfClassInfo);
 	}
 
     public void setStudentClasses(String last_name,String first_name, String termcode)
     {
     	listOfStudentClasses = sql.getStudentClassesData(last_name, first_name, termcode);
+    	System.out.println("ClassData: "+ listOfStudentClasses);
+		
     }
 
 	public int getPriority (){// what about other grades? 
@@ -35,11 +46,13 @@ public class MoveClass {
 		return numberOfSeniors;
 	}
 	
+	
+	
 	public void showOpenRooms(String daysToGet, String timeToget) {
 		List<String> tempArr = new ArrayList<String>();
+		
 
 		Map<String, Boolean> tempT = new HashMap<String, Boolean>();
-
 		tempArr = sql.getRoomsThatFit(sizeOfCurrentClass);
 		classes = sql.getClassDays(daysToGet, timeToget);
 	
@@ -172,6 +185,8 @@ public class MoveClass {
 	}
 
 ;
+
+
   //   public void saveClassTime()
   //   {
   //   	/*
