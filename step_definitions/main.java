@@ -22,7 +22,7 @@ public class main{
 		
 		moveClass.getClassData(input);
 		// Current class time [ACCT120] is on [MWF] at[3:00pm] in room 111
-		//moveClass.setStudentClasses("Payne","Gretchen", "201710");
+		moveClass.setStudentClasses("Payne","Gretchen", "201710");
 
 //0-----------------------example
 		// String result = moveClass.checkProfCollision("M","1500");

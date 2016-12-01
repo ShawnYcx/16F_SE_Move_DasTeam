@@ -23,8 +23,7 @@ public class QuerySQL {
 
 		columns = access.getDataFromSQL(sqlCMD, columnsToGet);
 
-		//System.out.println("getClassInfo: " + columns);
-		//System.out.println("\n");
+		//System.out.println("getClassInfo: " + columns+"\n");
 		return columns;
 	}
 
@@ -39,14 +38,16 @@ public class QuerySQL {
 		columnsToGet.add("Term_Code");
 
 		columns = access.getDataFromSQL(sqlCMD, columnsToGet);
+		//System.out.println("getProfName: " + columns+"\n");//checked
 		return columns;
 	}
 
 	public List<String> getProfessorSchedule(String name, String termcode){
-
+		deallocList();
 		String setName = ("'" + name + "'"); 
         String setTermCode = ("'%" + termcode + "%'");
-
+        //System.out.println(setName);
+        //System.out.println(termcode);
         String sqlCMD = ("SELECT Monday_Ind,Tuesday_Ind,Wednesday_Ind,Thursday_Ind,Friday_Ind,Begin_Time,End_Time, Instructor_Name, CRN from cs374_anon WHERE Instructor_Name ="+ setName + 
            "AND Term_Code like"+ setTermCode + "GROUP BY CRN"); 
 
@@ -56,11 +57,11 @@ public class QuerySQL {
 		columnsToGet.add("Thursday_Ind");
 		columnsToGet.add("Friday_Ind");
 		columnsToGet.add("Begin_Time");
-		columnsToGet.add("Instructor_Name");
 		columnsToGet.add("End_Time");
+		columnsToGet.add("Instructor_Name");
 
 		columns = access.getDataFromSQL(sqlCMD, columnsToGet); 
-
+		//System.out.println("getProfSchedule: " + columns+"\n");
 		return columns;
 	}	
 

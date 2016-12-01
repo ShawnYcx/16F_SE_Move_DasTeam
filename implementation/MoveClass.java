@@ -24,6 +24,8 @@ public class MoveClass {
 		sizeOfCurrentClass = listOfClassInfo.size();
 		professorName = sql.getProfName(crn);
 		//System.out.println("classinfo : "+ listOfClassInfo);
+
+		getProfessordata();
 	}
 
     public void setStudentClasses(String last_name,String first_name, String termcode)
@@ -44,7 +46,7 @@ public class MoveClass {
 			newlistOfStudentClasses.add(listOfStudentClasses.get(i+5));
 			newlistOfStudentClasses.add(listOfStudentClasses.get(i+6));
 		}
-		//System.out.println("ClassData: "+ newlistOfStudentClasses +"\n");work
+		System.out.println("StudentClassData: "+ newlistOfStudentClasses +"\n");//work
     }
 
      public String checkStudentCollision(String daysToGet,String timeToget)
@@ -57,13 +59,12 @@ public class MoveClass {
     	return "False";
     }
 
-    public void getProfessordata(String name, String termcode)
+    public void getProfessordata()
     {
-    	professorSchedule = sql.getProfessorSchedule(name, termcode);
-    	//professorSchedule = sql.getProfessorSchedule(professorName.get(0), professorName.get(1));
-		// System.out.println("professorname : "+ professorSchedule);
-		// System.out.println("\n");
-		for (int i = 0; i< professorSchedule.size(); i+=7)
+    	//professorSchedule = sql.getProfessorSchedule(name, termcode);
+    	professorSchedule = sql.getProfessorSchedule(professorName.get(0), professorName.get(1));
+
+		for (int i = 0; i< professorSchedule.size(); i+=8)
 		{
 			StringBuilder temp= new StringBuilder();
 			for(int count = i; count<i + 5; count++)
@@ -76,7 +77,8 @@ public class MoveClass {
 			newProfessorSchedule.add(professorSchedule.get(i+5));
 			newProfessorSchedule.add(professorSchedule.get(i+6));
 		}
-		System.out.println("professorSchedule : "+ newProfessorSchedule+"\n");
+			
+		System.out.println("professorSchedule : "+ newProfessorSchedule +"\n");//checked
     }
 
     public String checkProfCollision( String daysToGet, String timeToget)
