@@ -13,6 +13,7 @@ public class MoveClass {
 	private int countSeniors = 0;
 	private List<String> tMWF = new ArrayList<String>();
 	private List<String> tTR = new ArrayList<String>();
+	private List<String> tMW = new ArrayList<String>();
 	private List<String> classes = new ArrayList<String>();
 	private List<String> nameOfSeniors = new ArrayList<String>();
 	private List<String> professorName = new ArrayList<String>();// this gets professor's name and term code
@@ -29,6 +30,38 @@ public class MoveClass {
 				tMWF.add(Integer.toString(i));
 				tMWF.add("0");
 			}
+		}
+
+		for (int i = 800; i < 1600; i += 130){
+			if(i == 1230){
+				i -= 30;
+			}
+
+			if(i%100 == 60){
+				i += 40;
+			}
+
+			if (i != 1100){
+				tTR.add(Integer.toString(i));
+				tTR.add("0");
+			}
+
+		}		
+
+		for (int i = 800; i < 1600; i += 130){
+			if(i == 1230){
+				i -= 30;
+			}
+
+			if(i%100 == 60){
+				i-=30;
+			}
+
+			if (i != 1100){
+				tMW.add(Integer.toString(i));
+				tMW.add("0");
+			}
+
 		}
 	}
 
@@ -204,48 +237,43 @@ public class MoveClass {
 				return 1;
 
 		} else if ((input.equals("2")) || (input.equals("TR"))){
-				int time = 8;
-				System.out.print("[");
-				System.out.print(time + ":00,");
-				time++;
-				System.out.print(time + ":30,");
-				
-				time = 12;
-				for (int i = 2; i < 6; i++) {
-					if (time >= 13)
-						time -= 12; // Show times at HH:MM format instead of 24Hrs 
-					if (time == 4){
-						System.out.print(time + ":30");
-						break;
+			for (int i = 0; i < nameOfSeniors.size(); i+=2){
+				newlistOfStudentClasses = access.getDataFromSQL2("TR", nameOfSeniors.get(i+1), nameOfSeniors.get(i));
+					for (int j = 0; j < tTR.size(); j+=2) {
+						for (int k = 0; k < newlistOfStudentClasses.size(); k++) {
+							int x;
+							if (tTR.get(j).equals(newlistOfStudentClasses.get(k))){
+								x = Integer.parseInt(tTR.get(j+1)) + 1;
+								tTR.set(j+1, Integer.toString(x));
+							}
+						}
 					}
-					if (i % 2 == 0) {
-						System.out.print(time + ":00,");
-						time++;
-					} else {
-						System.out.print(time + ":30,");
-						time+=2;
-					}
-					
 				}
-				
-				System.out.println("]");
+
+				int time = 8;
+				for (int i = 0; i < tTR.size(); i+=2) {
+					System.out.println("[Time: " + tTR.get(i) + ", Number of seniors: " + tTR.get(i+1) + "]");   
+				}
 				return 2;
 
 		} else if ((input.equals("3")) || (input.equals("MW"))){
-				System.out.print("[");
-				int time = 8;
-				for (int i = 0; i < 8; i++) {
-					if (time != 11 ){ // Don't show classes at 11am
-						if (time >= 13)
-							time -= 12; // Show times at HH:MM format instead of 24Hrs 
-
-						System.out.print(time + ":" + "00");
-						System.out.print(", ");
+			for (int i = 0; i < nameOfSeniors.size(); i+=2){
+				newlistOfStudentClasses = access.getDataFromSQL2("MW", nameOfSeniors.get(i+1), nameOfSeniors.get(i));
+					for (int j = 0; j < tMW.size(); j+=2) {
+						for (int k = 0; k < newlistOfStudentClasses.size(); k++) {
+							int x;
+							if (tMW.get(j).equals(newlistOfStudentClasses.get(k))){
+								x = Integer.parseInt(tMW.get(j+1)) + 1;
+								tMW.set(j+1, Integer.toString(x));
+							}
+						}
 					}
-					time++;
 				}
-				System.out.print(4 + ":" +"00");
-				System.out.println("]");
+
+				int time = 8;
+				for (int i = 0; i < tTR.size(); i+=2) {
+					System.out.println("[Time: " + tMW.get(i) + ", Number of seniors: " + tMW.get(i+1) + "]");   
+				}
 				return 3;
 
 		} else if (input.toUpperCase().equals("QUIT")){
