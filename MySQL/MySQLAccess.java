@@ -248,7 +248,7 @@ public class MySQLAccess {
     }
 
     public String[] getClassInfo(String crn) {
-        String[] columns = new String[4];    
+        String[] columns = new String[5];    
         try {
             // This will load the MySQL driver, each DB has its own driver
                   Class.forName("org.sqlite.JDBC");
@@ -265,10 +265,26 @@ public class MySQLAccess {
             
             //Cyclomatic Complexity = while loop + for loop + 1 = 3
             while (resultSet.next()) {
+                String builder= "";
+            
+                builder += resultSet.getString("Monday_Ind");
+                builder += resultSet.getString("Tuesday_Ind");
+                builder += resultSet.getString("Wednesday_Ind");
+                builder += resultSet.getString("Thursday_Ind");
+                builder += resultSet.getString("Friday_Ind");
+                
+
                 columns[0] = resultSet.getString("Subject_Code");
                 columns[1] = resultSet.getString("Course_Number");
                 columns[2] = resultSet.getString("Begin_Time");
-                columns[3] = resultSet.getString("End_Time");                
+                columns[3] = resultSet.getString("End_Time");
+                columns[4] = builder;
+                break;
+                
+
+
+
+
             }
             } catch (Exception e) {
                  // throw e;

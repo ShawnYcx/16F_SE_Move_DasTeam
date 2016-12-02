@@ -24,7 +24,7 @@ public class main{
 		crn = options.next();
 		moveClass.clearScreen();
 
-		String[] classDetails = new String[4];
+		String[] classDetails = new String[5];
 		classDetails = moveClass.getClassDetails(crn);
 		
 		while (true){
@@ -62,7 +62,7 @@ public class main{
 					time = options.next();
 					// time = moveClass.splitAndMergeTimeString(input);
 					moveClass.clearScreen();
-				
+					
 					moveClass.showOpenRooms("MWF", input);
 					input = options.next();
 					System.out.println("Are you sure you want to move [CRN: " + crn + "] to Days: [MWF] and Time: "+ "["+ time + "]? (Y/N)");
@@ -127,6 +127,7 @@ public class main{
 		System.out.println("Information of the class that you have selected:");
 		System.out.println("[CRN: " + crn1 + "] ");
 		System.out.println("[Course: " + classDetails[0] + classDetails[1] + "] ");
+		System.out.println("[Class Days: " + classDetails[4] + "] ");
 		System.out.println("[Begin time: " + classDetails[2] + "] ");
 		System.out.println("[End time: " + classDetails[3] + "] ");
 		System.out.println("\n");
