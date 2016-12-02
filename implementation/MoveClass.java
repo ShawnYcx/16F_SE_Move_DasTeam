@@ -32,8 +32,9 @@ public class MoveClass {
     {
     	listOfStudentClasses = sql.getStudentClassesData(last_name, first_name, termcode);
     	//System.out.println("ClassData: "+ listOfStudentClasses +"\n");
+    	
     	//Cyclomatic Complexity = for loop + for loop + 1 = 3
-    	for (int i = 3; i< listOfStudentClasses.size(); i+=10)
+    	for (int i = 3; i< listOfStudentClasses.size(); i+=9)
 		{
 			StringBuilder temp= new StringBuilder();
 			for(int count = i; count<i + 5; count++)
@@ -44,7 +45,6 @@ public class MoveClass {
 			
 			newlistOfStudentClasses.add(temp.toString());
 			newlistOfStudentClasses.add(listOfStudentClasses.get(i+5));
-			newlistOfStudentClasses.add(listOfStudentClasses.get(i+6));
 		}
 		System.out.println("StudentClassData: "+ newlistOfStudentClasses +"\n");//work
     }
@@ -65,7 +65,7 @@ public class MoveClass {
     	//professorSchedule = sql.getProfessorSchedule(name, termcode);
     	professorSchedule = sql.getProfessorSchedule(professorName.get(0), professorName.get(1));
 
-		for (int i = 0; i< professorSchedule.size(); i+=8)
+		for (int i = 0; i< professorSchedule.size(); i+=7)
 		{
 			StringBuilder temp= new StringBuilder();
 

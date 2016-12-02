@@ -48,7 +48,7 @@ public class QuerySQL {
         String setTermCode = ("'%" + termcode + "%'");
         //System.out.println(setName);
         //System.out.println(termcode);
-        String sqlCMD = ("SELECT Monday_Ind,Tuesday_Ind,Wednesday_Ind,Thursday_Ind,Friday_Ind,Begin_Time,End_Time, Instructor_Name, CRN from cs374_anon WHERE Instructor_Name ="+ setName + 
+        String sqlCMD = ("SELECT Monday_Ind,Tuesday_Ind,Wednesday_Ind,Thursday_Ind,Friday_Ind,Begin_Time, Instructor_Name, CRN from cs374_anon WHERE Instructor_Name ="+ setName + 
            "AND Term_Code like"+ setTermCode + "GROUP BY CRN"); 
 
 		columnsToGet.add("Monday_Ind");
@@ -57,7 +57,6 @@ public class QuerySQL {
 		columnsToGet.add("Thursday_Ind");
 		columnsToGet.add("Friday_Ind");
 		columnsToGet.add("Begin_Time");
-		columnsToGet.add("End_Time");
 		columnsToGet.add("Instructor_Name");
 
 		columns = access.getDataFromSQL(sqlCMD, columnsToGet); 
@@ -72,7 +71,7 @@ public class QuerySQL {
         String setFirstName = ("'%" + firstName + "%'");
         String setTermCode = ("'%" + termcode + "%'");
 
-        String sqlCMD = ("SELECT Subject_Code, Course_Number, Instructor_Id,Monday_Ind,Tuesday_Ind,Wednesday_Ind,Thursday_Ind,Friday_Ind,Begin_Time,End_Time from cs374_anon WHERE Last_Name ="+ setLastName + 
+        String sqlCMD = ("SELECT Subject_Code, Course_Number, Instructor_Id,Monday_Ind,Tuesday_Ind,Wednesday_Ind,Thursday_Ind,Friday_Ind,Begin_Time from cs374_anon WHERE Last_Name ="+ setLastName + 
             "AND First_Name like" + setFirstName +"AND Term_Code like"+ setTermCode);
 
 		columnsToGet.add("Subject_Code");
@@ -84,7 +83,6 @@ public class QuerySQL {
 		columnsToGet.add("Thursday_Ind");
 		columnsToGet.add("Friday_Ind");
 		columnsToGet.add("Begin_Time");
-		columnsToGet.add("End_Time");
 
 		columns = access.getDataFromSQL(sqlCMD, columnsToGet); 
 
