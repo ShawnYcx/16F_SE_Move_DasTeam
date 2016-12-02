@@ -11,6 +11,7 @@ public class MoveClass {
 	private int sizeOfCurrentClass = 0;
 	private int countSeniors = 0;
 	private List<String> classes = new ArrayList<String>();
+	private List<String> nameOfSeniors = new ArrayList<String>();
 	private List<String> professorName = new ArrayList<String>();// this gets professor's name and term code
 	private List<String> professorSchedule = new ArrayList<String>();
 	private List<String> newProfessorSchedule = new ArrayList<String>();
@@ -21,31 +22,32 @@ public class MoveClass {
 	// Change to CRN soon
 	public void getClassData(String crn){
 		listOfClassInfo = sql.getClassInfo(crn);
+
 		sizeOfCurrentClass = listOfClassInfo.size();
 		professorName = sql.getProfName(crn);
 		//System.out.println("classinfo : "+ listOfClassInfo);
-
+		getSeniors();
 		getProfessordata();
 	}
 
-    public void setStudentClasses(String last_name,String first_name, String termcode)
+    public List<String> setStudentClasses(String days, String last_name,String first_name)
     {
-    	listOfStudentClasses = sql.getStudentClassesData(last_name, first_name, termcode);
+    	return sql.getStudentClassesData(day, last_name, first_name);
     	//System.out.println("ClassData: "+ listOfStudentClasses +"\n");
     	
-    	//Cyclomatic Complexity = for loop + for loop + 1 = 3
-    	for (int i = 3; i< listOfStudentClasses.size(); i+=9)
-		{
-			StringBuilder temp= new StringBuilder();
-			for(int count = i; count<i + 5; count++)
-			{
-				temp.append(listOfStudentClasses.get(count));
-			}
-			//System.out.println("temp : "+ temp +"\n");
+  //   	//Cyclomatic Complexity = for loop + for loop + 1 = 3
+  //   	for (int i = 3; i< listOfStudentClasses.size(); i+=9)
+		// {
+		// 	StringBuilder temp= new StringBuilder();
+		// 	for(int count = i; count<i + 5; count++)
+		// 	{
+		// 		temp.append(listOfStudentClasses.get(count));
+		// 	}
+		// 	//System.out.println("temp : "+ temp +"\n");
 			
-			newlistOfStudentClasses.add(temp.toString());
-			newlistOfStudentClasses.add(listOfStudentClasses.get(i+5));
-		}
+		// 	newlistOfStudentClasses.add(temp.toString());
+		// 	newlistOfStudentClasses.add(listOfStudentClasses.get(i+5));
+		// }
 		// System.out.println("StudentClassData: "+ newlistOfStudentClasses +"\n");//work
     }
 
@@ -98,15 +100,14 @@ public class MoveClass {
     	return false;
     }
 
-	public int getPriority(){// what about other grades? 
-		int numberOfSeniors = 0;
+	public void getSeniors(){// what about other grades? 
 		//Cyclomatic Complexity = for loop + for loop if + 1 = 3
 		for (int i = 0; i < listOfClassInfo.size(); i+=3) {
 			if (listOfClassInfo.get(i+2).equals("Senior")){
-				numberOfSeniors++;
+				nameOfSeniors.add(listOfClassInfo.get(0));
+				nameOfSeniors.add(listOfClassInfo.get(1));
 			}
 		}
-		return numberOfSeniors;
 	}
 	
 	
@@ -175,82 +176,95 @@ public class MoveClass {
 	}
 	public int showTimeSlots(String input) {
 		System.out.println("Which time slot would you want to move the class to?");
+
+		for (int i = 0; i < nameOfSeniors.size(); i+=2){
+			newlistOfStudentClasses = setStudentClasses(input, nameOfSeniors(0), nameOfSeniors(1));
+
+			for (int i = 0; i < newlistOfStudentClasses.size(); i++) {
+				
+			}
+
+		}
+
+		
+
+
 		//Cyclomatic Complexity = if + || + for loop + for loop if + for loop if + else if + || 
 		//+ else if + || + for loop + for loop if + for loop if + for loop if + for loop else 
 		//+ else if + || + for loop + for loop if + for loop if + else if + else + 1 = 22 (Moderate application Cyclomatic Complexity)
-		if ((input.equals("1")) || (input.equals("MWF"))){
-				System.out.print("[");
-				int time = 8;
-				for (int i = 0; i < 8; i++) {
-					if (time != 11 ){ // Don't show classes at 11am
-						if (time >= 13)
-							time -= 12; // Show times at HH:MM format instead of 24Hrs 
+		// if ((input.equals("1")) || (input.equals("MWF"))){
+		// 		System.out.print("[");
+		// 		int time = 8;
+		// 		for (int i = 0; i < 8; i++) {
+		// 			if (time != 11 ){ // Don't show classes at 11am
+		// 				if (time >= 13)
+		// 					time -= 12; // Show times at HH:MM format instead of 24Hrs 
 
-						System.out.print(time + ":" + "00");
-						System.out.print(", ");
-					}
-					time++;
-				}
-				System.out.print(4 + ":" +"00");
-				System.out.println("]");
-				return 1;
+		// 				System.out.print(time + ":" + "00");
+		// 				System.out.print(", ");
+		// 			}
+		// 			time++;
+		// 		}
+		// 		System.out.print(4 + ":" +"00");
+		// 		System.out.println("]");
+		// 		return 1;
 
-		} else if ((input.equals("2")) || (input.equals("TR"))){
-				int time = 8;
-				System.out.print("[");
-				System.out.print(time + ":00,");
-				time++;
-				System.out.print(time + ":30,");
+		// } else if ((input.equals("2")) || (input.equals("TR"))){
+		// 		int time = 8;
+		// 		System.out.print("[");
+		// 		System.out.print(time + ":00,");
+		// 		time++;
+		// 		System.out.print(time + ":30,");
 				
-				time = 12;
-				for (int i = 2; i < 6; i++) {
-					if (time >= 13)
-						time -= 12; // Show times at HH:MM format instead of 24Hrs 
-					if (time == 4){
-						System.out.print(time + ":30");
-						break;
-					}
-					if (i % 2 == 0) {
-						System.out.print(time + ":00,");
-						time++;
-					} else {
-						System.out.print(time + ":30,");
-						time+=2;
-					}
+		// 		time = 12;
+		// 		for (int i = 2; i < 6; i++) {
+		// 			if (time >= 13)
+		// 				time -= 12; // Show times at HH:MM format instead of 24Hrs 
+		// 			if (time == 4){
+		// 				System.out.print(time + ":30");
+		// 				break;
+		// 			}
+		// 			if (i % 2 == 0) {
+		// 				System.out.print(time + ":00,");
+		// 				time++;
+		// 			} else {
+		// 				System.out.print(time + ":30,");
+		// 				time+=2;
+		// 			}
 					
-				}
+		// 		}
 				
-				System.out.println("]");
-				return 2;
+		// 		System.out.println("]");
+		// 		return 2;
 
-		} else if ((input.equals("3")) || (input.equals("MW"))){
-				System.out.print("[");
-				int time = 8;
-				for (int i = 0; i < 8; i++) {
-					if (time != 11 ){ // Don't show classes at 11am
-						if (time >= 13)
-							time -= 12; // Show times at HH:MM format instead of 24Hrs 
+		// } else if ((input.equals("3")) || (input.equals("MW"))){
+		// 		System.out.print("[");
+		// 		int time = 8;
+		// 		for (int i = 0; i < 8; i++) {
+		// 			if (time != 11 ){ // Don't show classes at 11am
+		// 				if (time >= 13)
+		// 					time -= 12; // Show times at HH:MM format instead of 24Hrs 
 
-						System.out.print(time + ":" + "00");
-						System.out.print(", ");
-					}
-					time++;
-				}
-				System.out.print(4 + ":" +"00");
-				System.out.println("]");
-				return 3;
+		// 				System.out.print(time + ":" + "00");
+		// 				System.out.print(", ");
+		// 			}
+		// 			time++;
+		// 		}
+		// 		System.out.print(4 + ":" +"00");
+		// 		System.out.println("]");
+		// 		return 3;
 
-		} else if (input.toUpperCase().equals("QUIT")){
+		// } else if (input.toUpperCase().equals("QUIT")){
 
-			return -2;
+		// 	return -2;
 
-		} else {
+		// } else {
 
-			System.out.println("Unknown input. Please try again.");
-			System.out.println("Example: type in \"1\" or \" MWF \"");
-			return -1;
+		// 	System.out.println("Unknown input. Please try again.");
+		// 	System.out.println("Example: type in \"1\" or \" MWF \"");
+		// 	return -1;
 
-		}
+		// }
 	}
 
 	public String splitAndMergeTimeString(String stringToSplit) {

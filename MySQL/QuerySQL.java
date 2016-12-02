@@ -64,24 +64,14 @@ public class QuerySQL {
 		return columns;
 	}	
 
-	public List<String> getStudentClassesData(String lastName, String firstName, String termcode){
+	public List<String> getStudentClassesData(String days, String lastName, String firstName){
 		deallocList();
 
 		String setLastName = ("'" + lastName + "'"); 
         String setFirstName = ("'%" + firstName + "%'");
-        String setTermCode = ("'%" + termcode + "%'");
 
-        String sqlCMD = ("SELECT Subject_Code, Course_Number, Instructor_Id,Monday_Ind,Tuesday_Ind,Wednesday_Ind,Thursday_Ind,Friday_Ind,Begin_Time from cs374_anon WHERE Last_Name ="+ setLastName + 
-            "AND First_Name like" + setFirstName +"AND Term_Code like"+ setTermCode);
+        String sqlCMD = ("SELECT Begin_Time from cs374_anon WHERE Last_Name ="+ setLastName + "AND First_Name like" + setFirstName);
 
-		columnsToGet.add("Subject_Code");
-		columnsToGet.add("Course_Number");
-		columnsToGet.add("Instructor_Id");
-		columnsToGet.add("Monday_Ind");
-		columnsToGet.add("Tuesday_Ind");
-		columnsToGet.add("Wednesday_Ind");
-		columnsToGet.add("Thursday_Ind");
-		columnsToGet.add("Friday_Ind");
 		columnsToGet.add("Begin_Time");
 
 		columns = access.getDataFromSQL(sqlCMD, columnsToGet); 
