@@ -19,7 +19,7 @@ public class main{
 		System.out.println("Select an option to continue.");
 		
 		System.out.println("Enter the CRN of the class you would like to move: ");
-		System.out.println("Example inputs: [10602, 10457]");
+		System.out.println("Example inputs: CS:[10457, 10458], IT:[10844, 10911], ACCT:[10462, 10463]");
 
 		crn = options.next();
 		moveClass.clearScreen();
