@@ -28,6 +28,8 @@ public class MySQLAccess {
             resultSet = statement.executeQuery(sqlCMD);
            
             internal = new ArrayList<String>();
+
+            //Cyclomatic Complexity = while loop + 1 = 2
             while (resultSet.next()) {
                 String room_number = resultSet.getString("room_number");
                 internal.add(room_number);
@@ -56,6 +58,7 @@ public class MySQLAccess {
             resultSet = statement.executeQuery(sqlCMD);
             
             internal = new ArrayList<String>();
+            //Cyclomatic Complexity = while loop + for loop + 1 = 3
             while (resultSet.next()) {
                 for (int i = 0; i < columnsToGet.size(); i++) {
                     // Getting column names from the List and save to Column Data                
@@ -76,6 +79,7 @@ public class MySQLAccess {
     // You need to close the resultSet
     private void close() {
          try {
+            //Cyclomatic Complexity = if + if + if + 1 = 4
                  if (resultSet != null) {
                          resultSet.close();
                  }

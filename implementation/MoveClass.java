@@ -32,7 +32,7 @@ public class MoveClass {
     {
     	listOfStudentClasses = sql.getStudentClassesData(last_name, first_name, termcode);
     	//System.out.println("ClassData: "+ listOfStudentClasses +"\n");
-
+    	//Cyclomatic Complexity = for loop + for loop + 1 = 3
     	for (int i = 3; i< listOfStudentClasses.size(); i+=10)
 		{
 			StringBuilder temp= new StringBuilder();
@@ -51,6 +51,7 @@ public class MoveClass {
 
      public String checkStudentCollision(String daysToGet,String timeToget)
     {
+    	//Cyclomatic Complexity = for loop + for loop if + for loop && + 1 = 4
     	for(int i = 0; i < newlistOfStudentClasses.size() ; i +=3)
     	{
     		if(daysToGet == newlistOfStudentClasses.get(i) && timeToget == newlistOfStudentClasses.get(i++))
@@ -67,6 +68,8 @@ public class MoveClass {
 		for (int i = 0; i< professorSchedule.size(); i+=8)
 		{
 			StringBuilder temp= new StringBuilder();
+
+			//Cyclomatic Complexity = for loop + 1 = 2
 			for(int count = i; count<i + 5; count++)
 			{
 				temp.append(professorSchedule.get(count));
@@ -83,6 +86,7 @@ public class MoveClass {
 
     public String checkProfCollision( String daysToGet, String timeToget)
     {
+    	//Cyclomatic Complexity = for loop + for loop if + for loop && + 1 = 4
     	for(int i = 0; i < newProfessorSchedule.size() ; i +=3)
     	{
     		if(daysToGet == newProfessorSchedule.get(i) && timeToget == newProfessorSchedule.get(i++))
@@ -93,6 +97,7 @@ public class MoveClass {
 
 	public int getPriority (){// what about other grades? 
 		int numberOfSeniors = 0;
+		//Cyclomatic Complexity = for loop + for loop if + 1 = 3
 		for (int i = 0; i < listOfClassInfo.size(); i+=3) {
 			if (listOfClassInfo.get(i+2).equals("Senior")){
 				numberOfSeniors++;
@@ -110,7 +115,8 @@ public class MoveClass {
 		Map<String, Boolean> tempT = new HashMap<String, Boolean>();
 		tempArr = sql.getRoomsThatFit(sizeOfCurrentClass);
 		classes = sql.getClassDays(daysToGet, timeToget);
-	
+
+		//Cyclomatic Complexity = for loop + for loop if + for loop else + 1 = 4
 		for (int i = 0; i < tempArr.size(); i++) {
 			String roomAtIndex = tempArr.get(i);
 			if (classes.contains(roomAtIndex)){
@@ -125,7 +131,7 @@ public class MoveClass {
 	// This function loops though the Map and display the rooms that has false as value
 	public void findRoomsThatFit(Map<String, Boolean> displayRooms, String daysToGet) {
 		int counter = 0;
-
+		//Cyclomatic Complexity = for + if + 1 = 3
 		for (Map.Entry<String, Boolean> entry : displayRooms.entrySet())
 		{
 			// output if true and room fits the number of students in the current class
@@ -134,6 +140,7 @@ public class MoveClass {
 			}
 		}
 
+		//Cyclomatic Complexity = if + for loop + for loop if + for loop && + for loop else + else + 1 = 7
 		if (counter != displayRooms.size()){
 			List<String> temp = new ArrayList<String>(); 
 			temp = sql.getRoomsThatFit(sizeOfCurrentClass);
@@ -167,6 +174,9 @@ public class MoveClass {
 
 		public int showTimeSlots(String input) {
 		System.out.println("Which time slot would you want to move the class to?");
+		//Cyclomatic Complexity = if + || + for loop + for loop if + for loop if + else if + || 
+		//+ else if + || + for loop + for loop if + for loop if + for loop if + for loop else 
+		//+ else if + || + for loop + for loop if + for loop if + else if + else + 1 = 22 (Moderate application Cyclomatic Complexity)
 		if ((input.equals("1")) || (input.equals("MWF"))){
 				System.out.print("[");
 				int time = 8;

@@ -98,7 +98,7 @@ public class QuerySQL {
 		
 		String sqlCMD;
 		String setBeginTime = ("'%" + timeToget + "%'");
-
+		//Cyclomatic Complexity = if + else if + else + 1 = 4
 		if (daysToGet.equals("MWF")){
 			sqlCMD = ("SELECT Room_Code, Begin_Time from cs374_anon WHERE Monday_Ind = 'M' AND Wednesday_Ind like '%W%' AND Friday_Ind like '%F%' AND Begin_Time like "+ setBeginTime +  "and Bldg_Code like 'MBB' group by Room_Code");
 		}
