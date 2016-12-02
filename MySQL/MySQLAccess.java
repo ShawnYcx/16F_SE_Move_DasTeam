@@ -41,7 +41,7 @@ public class MySQLAccess {
             } finally {
                 close();
             }
-            System.out.println(internal);
+            // System.out.println(internal);
         
         return internal;
      }

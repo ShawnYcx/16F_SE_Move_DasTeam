@@ -5,6 +5,8 @@ import implementation.MoveClass;
 // import implementation.GetClass;
 
 public class main{
+	// Some inputs may be '9:30' and some may be '930'
+	// This function will generalize the input
 
 	public static void main(String[] args) throws Exception{
 		// GetClass getClasses = new GetClass();
@@ -46,20 +48,30 @@ public class main{
 		else {
 			while ( true ) {
 				chosen = moveClass.showTimeSlots(input);
+				// System.out.println("Class priority based on number of seniors: " + moveClass.getPriority);
 				if (chosen == 1){
 					input = options.next();
-					moveClass.showOpenRooms("MWF", input);
+					input = moveClass.splitAndMergeTimeString(input);
+					if (moveClass.checkProfCollision("MWF", input)){
+						System.out.println("The professor of the class you're trying to move is teaching a class at this time and day.");
+						System.out.println("Please select another.");
+					}
+					if (moveClass.checkStudentCollision("MWF", input)){
+						System.out.println("Student Collided");
+						// System.out.println(moveClass.getPriority);
+					}
+					// moveClass.showOpenRooms("MWF", input);
 					break;
 				} else if (chosen == 2){
-		
 					input = options.next();
-					moveClass.showOpenRooms("TR", input);
+					input = moveClass.splitAndMergeTimeString(input);
+					// moveClass.showOpenRooms("TR", input);
 					break;
 					
 				} else if (chosen == 3){
-		
 					input = options.next();
-					moveClass.showOpenRooms("MW", input);
+					input = moveClass.splitAndMergeTimeString(input);
+					// moveClass.showOpenRooms("MW", input);
 					break;
 				} else if (chosen == -1){
 					input = options.next();
@@ -67,41 +79,6 @@ public class main{
 					break;
 				}
 			}
-		}
-
-		
-
-
-		// //Cyclomatic Complexity = if + if + 1 = 3
-		// if (i.equals("1")){
-		// 	Scanner user_input = new Scanner( System.in );			
-		// 	System.out.println("Enter Business building classroom number: ");
-		// 	System.out.println("Try typing classroom number 301 or 316.");
-		// 	String roomNumber = user_input.next();
-			
-		// 	moveClass.takeRoom(roomNumber);
-		// 	System.out.println("Maximum students allowed in room ["+ roomNumber +"]: " + moveClass.getMaxAllowed());
-		// }
-		// if (i.equals("2")) {
-
-		// 	Scanner user_input = new Scanner( System.in );
-		// 	String subCode, cNumber;
-
-		// 	System.out.println("Input subject code: ");
-		// 	subCode = user_input.next();
-
-		// 	System.out.println("Input course number: ");
-		// 	cNumber = user_input.next();
-
-		// 	moveClass.getClassData(subCode, cNumber);
-
-		// 	System.out.println("\nList of students taking [" + subCode + "" + cNumber + "] are: " );
-		// 	moveClass.printStudentInClass();
-		// 	// if (moveClass.checkClassExist()){
-				
-		// 	// }else{
-		// 		// System.out.println("The class [" + subCode + "" + cNumber + "] does not exist in the database.");
-		// 	// }
-		// }
+		}		
 	}
 }
