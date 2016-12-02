@@ -145,7 +145,7 @@ public class MoveClass {
 	}
 
 	public int showTimeSlots(String input) {
-		System.out.println("Which time slot would you want to move the class to?");
+		System.out.println("Which time slot would you want to move the class to?\n");
 		daySaved = input;
 		//Cyclomatic Complexity = if + || + for loop + for loop if + for loop if + else if + || 
 		//+ else if + || + for loop + for loop if + for loop if + for loop if + for loop else 
@@ -168,9 +168,15 @@ public class MoveClass {
 
 				for (int i = 0; i < tMWF.size(); i+=2) {
 					if (professorTime.get(0).equals(tMWF.get(i)))
-						System.out.println("The professor is having a class a this time: [" + tMWF.get(i) +"]");   
-					else
-						System.out.println("[Time: " + tMWF.get(i) + ", Number of seniors: " + tMWF.get(i+1) + "]");   
+						System.out.println("The professor is having another class a this time: [" + tMWF.get(i) +"]");   
+					else{
+						if (tMWF.get(i+1).equals("0")){
+							System.out.println("[Time: " + tMWF.get(i) + ", Number of seniors: " + tMWF.get(i+1) + "] - Recommended");   
+						}
+						else{
+							System.out.println("[Time: " + tMWF.get(i) + ", Number of seniors: " + tMWF.get(i+1) + "]");   
+						}
+					}
 				}
 
 				return 1;
@@ -190,7 +196,13 @@ public class MoveClass {
 
 				int time = 8;
 				for (int i = 0; i < tTR.size(); i+=2) {
-					System.out.println("[Time: " + tTR.get(i) + ", Number of seniors: " + tTR.get(i+1) + "]");   
+					
+					if (tTR.get(i+1).equals("0")){
+						System.out.println("[Time: " + tTR.get(i) + ", Number of seniors: " + tTR.get(i+1) + "] - Recommended");   
+					}
+					else{
+						System.out.println("[Time: " + tTR.get(i) + ", Number of seniors: " + tTR.get(i+1) + "]");   
+					}
 				}
 				return 2;
 
@@ -210,7 +222,14 @@ public class MoveClass {
 
 				int time = 8;
 				for (int i = 0; i < tTR.size(); i+=2) {
-					System.out.println("[Time: " + tMW.get(i) + ", Number of seniors: " + tMW.get(i+1) + "]");   
+
+					if (tMW.get(i+1).equals("0")){
+						System.out.println("[Time: " + tMW.get(i) + ", Number of seniors: " + tMW.get(i+1) + "] - Recommended");   
+					}
+					else{
+						System.out.println("[Time: " + tMW.get(i) + ", Number of seniors: " + tMW.get(i+1) + "]"); 
+					}
+					  
 				}
 				return 3;
 
@@ -225,38 +244,23 @@ public class MoveClass {
 		}
 	}
 
-	public String splitAndMergeTimeString(String stringToSplit) {
-		if (stringToSplit.contains(":")){
-			// This is when stringToSplit contains a colon (9:00)
-			String[] splitter = stringToSplit.split(":");
-			if (Integer.parseInt(splitter[0]) < 8){
-				splitter[0] += 12;
-				stringToSplit = splitter[0]+splitter[1];
-			}else
-				stringToSplit = splitter[0]+splitter[1];
-
-			return stringToSplit;
-		} else { 
-
-			// This is when stringToSplit does not have a colon (900)
-			int temp = Integer.parseInt(stringToSplit);
-			if (temp < 800){
-				temp += 1200;
-				stringToSplit = Integer.toString(temp);
+	public void getSeniors(){
+			//Cyclomatic Complexity = for loop + for loop if + 1 = 3
+			for (int i = 0; i < listOfClassInfo.size(); i+=3) {
+				if (listOfClassInfo.get(i+2).equals("Senior")){
+					nameOfSeniors.add(listOfClassInfo.get(i));
+					nameOfSeniors.add(listOfClassInfo.get(i+1));
+				}
 			}
-			return stringToSplit;	
-		}
 	}
 
-
-public void getSeniors(){
-		//Cyclomatic Complexity = for loop + for loop if + 1 = 3
-		for (int i = 0; i < listOfClassInfo.size(); i+=3) {
-			if (listOfClassInfo.get(i+2).equals("Senior")){
-				nameOfSeniors.add(listOfClassInfo.get(i));
-				nameOfSeniors.add(listOfClassInfo.get(i+1));
-			}
-		}
-
+	public String[] getClassDetails(String crn){
+        return access.getClassInfo(crn);
+	}
+	
+	public void clearScreen(){
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
 	}
 }
+

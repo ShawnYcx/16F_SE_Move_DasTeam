@@ -14,7 +14,7 @@ public class MySQLAccess {
     private ResultSet resultSet = null;
 
     private List<String> internal;
-    private String max_number;
+
     public List<String> readDatabase(String sqlCMD){
          try {
             
@@ -246,4 +246,36 @@ public class MySQLAccess {
             }
         return internal4;
     }
+
+    public String[] getClassInfo(String crn) {
+        String[] columns = new String[4];    
+        try {
+            // This will load the MySQL driver, each DB has its own driver
+                  Class.forName("org.sqlite.JDBC");
+                // Setup the connection with the DB
+                connect = DriverManager
+                             .getConnection("jdbc:sqlite:Database/SQLite/CS374.db");
+
+            String setCRN = ("'" + crn + "'");
+            String sqlCMD = ("select * from cs374_anon where CRN=" + setCRN);
+
+            statement = connect.createStatement();
+            resultSet = statement.executeQuery(sqlCMD);
+            
+            
+            //Cyclomatic Complexity = while loop + for loop + 1 = 3
+            while (resultSet.next()) {
+                columns[0] = resultSet.getString("Subject_Code");
+                columns[1] = resultSet.getString("Course_Number");
+                columns[2] = resultSet.getString("Begin_Time");
+                columns[3] = resultSet.getString("End_Time");                
+            }
+            } catch (Exception e) {
+                 // throw e;
+            } finally {
+                 close();
+            }
+        return columns;
+    }
+
 }
