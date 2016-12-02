@@ -19,13 +19,13 @@ public class MoveClass {
 	private List<String> newProfessorSchedule = new ArrayList<String>();
 	private List<String> listOfClassInfo = new ArrayList<String>();
 	private List<String> listOfStudentClasses = new ArrayList<String>(); // this store all the classes a student has taken.
-	private List<String> newlistOfStudentClasses = new ArrayList<String>();
+	
 
 	public void init () {
 		for (int i = 800; i < 1700; i += 100){
 			if (i != 1100){
-				tMWF.add(i.toString());
-				tMWF.add(0);
+				tMWF.add(Integer.toString(i));
+				tMWF.add("0");
 			}
 		}
 	}
@@ -33,17 +33,19 @@ public class MoveClass {
 	// Change to CRN soon
 	public void getClassData(String crn){
 		listOfClassInfo = sql.getClassInfo(crn);
-
 		sizeOfCurrentClass = listOfClassInfo.size();
 		professorName = sql.getProfName(crn);
-		//System.out.println("classinfo : "+ listOfClassInfo);
+
 		getSeniors();
+		
+		//System.out.println("classinfo : "+ listOfClassInfo);
+		
 		getProfessordata();
 	}
 
     public List<String> setStudentClasses(String days, String last_name,String first_name)
     {
-    	return sql.getStudentClassesData(day, last_name, first_name);
+    	return sql.getStudentClassesData(days, last_name, first_name);
     	//System.out.println("ClassData: "+ listOfStudentClasses +"\n");
     	
   //   	//Cyclomatic Complexity = for loop + for loop + 1 = 3
@@ -62,37 +64,37 @@ public class MoveClass {
 		// System.out.println("StudentClassData: "+ newlistOfStudentClasses +"\n");//work
     }
 
-    public boolean checkStudentCollision(String daysToGet,String timeToget)
+    public void checkStudentCollision(String daysToGet,String timeToget)
     {
     	//Cyclomatic Complexity = for loop + for loop if + for loop && + 1 = 4
-    	for(int i = 0; i < newlistOfStudentClasses.size() ; i +=3)
-    	{
-    		if(daysToGet.equals(newlistOfStudentClasses.get(i)) && timeToget.equals(newlistOfStudentClasses.get(i+1)))
-    			return true;
-    	}
-    	return false;
+    	// for(int i = 0; i < newlistOfStudentClasses.size() ; i +=3)
+    	// {
+    	// 	if(daysToGet.equals(newlistOfStudentClasses.get(i)) && timeToget.equals(newlistOfStudentClasses.get(i+1)))
+    	// 		return true;
+    	// }
+    	// return false;
     }
 
     public void getProfessordata()
     {
     	//professorSchedule = sql.getProfessorSchedule(name, termcode);
-    	professorSchedule = sql.getProfessorSchedule(professorName.get(0), professorName.get(1));
+  //   	professorSchedule = sql.getProfessorSchedule(professorName.get(0), professorName.get(1));
 
-		for (int i = 0; i< professorSchedule.size(); i+=7)
-		{
-			StringBuilder temp= new StringBuilder();
+		// for (int i = 0; i< professorSchedule.size(); i+=7)
+		// {
+		// 	StringBuilder temp= new StringBuilder();
 
-			//Cyclomatic Complexity = for loop + 1 = 2
-			for(int count = i; count<i + 5; count++)
-			{
-				temp.append(professorSchedule.get(count));
-			}
-			//System.out.println("temp : "+ temp +"\n");
+		// 	//Cyclomatic Complexity = for loop + 1 = 2
+		// 	for(int count = i; count<i + 5; count++)
+		// 	{
+		// 		temp.append(professorSchedule.get(count));
+		// 	}
+		// 	//System.out.println("temp : "+ temp +"\n");
 			
-			newProfessorSchedule.add(temp.toString());
-			newProfessorSchedule.add(professorSchedule.get(i+5));
-			newProfessorSchedule.add(professorSchedule.get(i+6));
-		}
+		// 	newProfessorSchedule.add(temp.toString());
+		// 	newProfessorSchedule.add(professorSchedule.get(i+5));
+		// 	newProfessorSchedule.add(professorSchedule.get(i+6));
+		// }
 		// System.out.println("professorSchedule : "+ newProfessorSchedule);
 		// System.out.println("\n");
 
@@ -176,37 +178,31 @@ public class MoveClass {
 
 	public int showTimeSlots(String input) {
 		System.out.println("Which time slot would you want to move the class to?");
-
+		
 		//Cyclomatic Complexity = if + || + for loop + for loop if + for loop if + else if + || 
 		//+ else if + || + for loop + for loop if + for loop if + for loop if + for loop else 
 		//+ else if + || + for loop + for loop if + for loop if + else if + else + 1 = 22 (Moderate application Cyclomatic Complexity)
 		if ((input.equals("1")) || (input.equals("MWF"))){
-
+			
 			for (int i = 0; i < nameOfSeniors.size(); i+=2){
-				newlistOfStudentClasses = setStudentClasses("MWF", nameOfSeniors(0), nameOfSeniors(1));
+				
+				newlistOfStudentClasses = setStudentClasses("MWF", nameOfSeniors.get(i+1), nameOfSeniors.get(i));
+				
 					for (int j = 0; j < tMWF.size(); j+=2) {
 						for (int k = 0; k < newlistOfStudentClasses.size(); k++) {
-							if (tMWF.get(j).equals(newlistOfStudentClasses.get(k)))
-								tMWF[j+1] = tMWF.get(j+1) + 1;
+							int x;
+							if (tMWF.get(j).equals(newlistOfStudentClasses.get(k))){
+								x = Integer.parseInt(tMWF.get(j+1)) + 1;
+								tMWF.set(j+1, Integer.toString(x));
+							}
 						}
 					}
 				}
 
-
-				System.out.print("[");
 				int time = 8;
-				for (int i = 0; i < 8; i++) {
-					if (time != 11 ){ // Don't show classes at 11am
-						if (time >= 13)
-							time -= 12; // Show times at HH:MM format instead of 24Hrs 
-
-						System.out.print(time + ":" + "00");
-						System.out.print(", ");
-					}
-					time++;
+				for (int i = 0; i < tMWF.size(); i+=2) {
+					System.out.println("[Time: " + tMWF.get(i) + ", Number of seniors: " + tMWF.get(i+1) + "]");   
 				}
-				System.out.print(4 + ":" +"00");
-				System.out.println("]");
 				return 1;
 
 		} else if ((input.equals("2")) || (input.equals("TR"))){
@@ -293,12 +289,16 @@ public class MoveClass {
 
 public void getSeniors(){// what about other grades? 
 		//Cyclomatic Complexity = for loop + for loop if + 1 = 3
+
+
 		for (int i = 0; i < listOfClassInfo.size(); i+=3) {
 			if (listOfClassInfo.get(i+2).equals("Senior")){
-				nameOfSeniors.add(listOfClassInfo.get(0));
-				nameOfSeniors.add(listOfClassInfo.get(1));
+				nameOfSeniors.add(listOfClassInfo.get(i));
+				nameOfSeniors.add(listOfClassInfo.get(i+1));
 			}
 		}
+
+		System.out.println(nameOfSeniors);
 	}
 
 

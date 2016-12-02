@@ -13,6 +13,7 @@ public class main{
 		MoveClass moveClass = new MoveClass();
 		Scanner options = new Scanner( System.in );
 		String input, input2;
+		moveClass.init();
 		//getClasses.readDatabase();
 
 		System.out.println("Select an option to continue.");
@@ -24,7 +25,7 @@ public class main{
 		
 		moveClass.getClassData(input);
 		// Current class time [ACCT120] is on [MWF] at[3:00pm] in room 111
-		moveClass.setStudentClasses("Payne","Gretchen", "201710");
+		// moveClass.setStudentClasses("Payne","Gretchen", "201710");
 
 //0-----------------------example
 		// String result = moveClass.checkProfCollision("M","1500");
@@ -56,10 +57,10 @@ public class main{
 						System.out.println("The professor of the class you're trying to move is teaching a class at this time and day.");
 						System.out.println("Please select another.");
 					}
-					if (moveClass.checkStudentCollision("MWF", input)){
-						System.out.println("Student Collided");
-						// System.out.println(moveClass.getPriority);
-					}
+					// if (moveClass.checkStudentCollision("MWF", input)){
+					// 	System.out.println("Student Collided");
+					// 	// System.out.println(moveClass.getPriority);
+					// }
 					// moveClass.showOpenRooms("MWF", input);
 					break;
 				} else if (chosen == 2){

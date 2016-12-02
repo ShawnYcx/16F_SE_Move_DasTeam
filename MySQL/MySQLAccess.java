@@ -26,9 +26,8 @@ public class MySQLAccess {
 
             statement = connect.createStatement();
             resultSet = statement.executeQuery(sqlCMD);
-           
+            
             internal = new ArrayList<String>();
-
             //Cyclomatic Complexity = while loop + 1 = 2
             while (resultSet.next()) {
                 String room_number = resultSet.getString("room_number");
@@ -64,6 +63,7 @@ public class MySQLAccess {
                     // Getting column names from the List and save to Column Data                
                     String columnData = resultSet.getString(columnsToGet.get(i));
                     internal.add(columnData);
+
                     //System.out.println("1: " +internal);
                 }
             }
@@ -73,6 +73,7 @@ public class MySQLAccess {
             } finally {
                  close();
             }
+        System.out.println(internal);
         return internal;
     }
 
@@ -95,4 +96,38 @@ public class MySQLAccess {
 
          }
     }
+
+    public List<String> getDataFromSQL2(String sqlCMD, List<String> columnsToGet) {
+        List<String> internal1 = new ArrayList<String>();
+        try {
+            // This will load the MySQL driver, each DB has its own driver
+                  Class.forName("org.sqlite.JDBC");
+                // Setup the connection with the DB
+                connect = DriverManager
+                             .getConnection("jdbc:sqlite:Database/SQLite/CS374.db");
+            
+            statement = connect.createStatement();
+            resultSet = statement.executeQuery(sqlCMD);
+            
+            
+            //Cyclomatic Complexity = while loop + for loop + 1 = 3
+            while (resultSet.next()) {
+                for (int i = 0; i < columnsToGet.size(); i++) {
+                    // Getting column names from the List and save to Column Data                
+                    String columnData = resultSet.getString(columnsToGet.get(i));
+                    internal1.add(columnData);
+
+                    //System.out.println("1: " +internal);
+                }
+            }
+                                 
+            } catch (Exception e) {
+                 // throw e;
+            } finally {
+                 close();
+            }
+        System.out.println(internal);
+        return internal1;
+    }
+
 }
