@@ -61,7 +61,7 @@ public class main{
 					// 	System.out.println("Student Collided");
 					// 	// System.out.println(moveClass.getPriority);
 					// }
-					// moveClass.showOpenRooms("MWF", input);
+					moveClass.showOpenRooms("MWF", input);
 					break;
 				} else if (chosen == 2){
 					input = options.next();

@@ -1,12 +1,13 @@
 //CS374 DasTeam: Shawn scy12a, Steven sxq13a, Ivan ioa13a.
 package implementation;
 
-import MySQL.QuerySQL;
+import MySQL.*;
 import java.util.*;
 import java.util.Scanner;
 
 public class MoveClass {
 	QuerySQL sql = new QuerySQL();
+	MySQLAccess access = new MySQLAccess();
 
 	private int sizeOfCurrentClass = 0;
 	private int countSeniors = 0;
@@ -17,6 +18,7 @@ public class MoveClass {
 	private List<String> professorName = new ArrayList<String>();// this gets professor's name and term code
 	private List<String> professorSchedule = new ArrayList<String>();
 	private List<String> newProfessorSchedule = new ArrayList<String>();
+	private List<String> newlistOfStudentClasses = new ArrayList<String>();
 	private List<String> listOfClassInfo = new ArrayList<String>();
 	private List<String> listOfStudentClasses = new ArrayList<String>(); // this store all the classes a student has taken.
 	
@@ -37,15 +39,12 @@ public class MoveClass {
 		professorName = sql.getProfName(crn);
 
 		getSeniors();
-		
-		//System.out.println("classinfo : "+ listOfClassInfo);
-		
 		getProfessordata();
 	}
 
-    public List<String> setStudentClasses(String days, String last_name,String first_name)
+    public void setStudentClasses(String days, String last_name,String first_name)
     {
-    	return sql.getStudentClassesData(days, last_name, first_name);
+    	// return sql.getStudentClassesData(days, last_name, first_name);
     	//System.out.println("ClassData: "+ listOfStudentClasses +"\n");
     	
   //   	//Cyclomatic Complexity = for loop + for loop + 1 = 3
@@ -104,7 +103,7 @@ public class MoveClass {
     public boolean checkProfCollision( String daysToGet, String timeToget )
     {
     	//Cyclomatic Complexity = for loop + for loop if + for loop && + 1 = 4
-    	System.out.println(newProfessorSchedule);
+    	// System.out.println(newProfessorSchedule);
     	for(int i = 0; i < newProfessorSchedule.size() ; i +=3)
     	{
     		if(daysToGet.equals(newProfessorSchedule.get(i)) && timeToget.equals(newProfessorSchedule.get(i+1)))
@@ -185,9 +184,7 @@ public class MoveClass {
 		if ((input.equals("1")) || (input.equals("MWF"))){
 			
 			for (int i = 0; i < nameOfSeniors.size(); i+=2){
-				
-				newlistOfStudentClasses = setStudentClasses("MWF", nameOfSeniors.get(i+1), nameOfSeniors.get(i));
-				
+				newlistOfStudentClasses = access.getDataFromSQL2("MWF", nameOfSeniors.get(i+1), nameOfSeniors.get(i));
 					for (int j = 0; j < tMWF.size(); j+=2) {
 						for (int k = 0; k < newlistOfStudentClasses.size(); k++) {
 							int x;
@@ -203,6 +200,7 @@ public class MoveClass {
 				for (int i = 0; i < tMWF.size(); i+=2) {
 					System.out.println("[Time: " + tMWF.get(i) + ", Number of seniors: " + tMWF.get(i+1) + "]");   
 				}
+
 				return 1;
 
 		} else if ((input.equals("2")) || (input.equals("TR"))){
@@ -298,7 +296,6 @@ public void getSeniors(){// what about other grades?
 			}
 		}
 
-		System.out.println(nameOfSeniors);
 	}
 
 
