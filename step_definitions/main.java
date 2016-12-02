@@ -26,7 +26,7 @@ public class main{
 
 		String[] classDetails = new String[4];
 		classDetails = moveClass.getClassDetails(crn);
-		
+		//Cyclomatic Complexity = while loop + while loop if + while loop else + 1 = 4
 		while (true){
 			moveClass.getClassData(crn);
 			if (moveClass.getStopper() == 0)
@@ -51,6 +51,10 @@ public class main{
 		input = options.next();
 		moveClass.clearScreen();
 		int chosen = 0;
+
+		//Cyclomatic Complexity = if + || + else + while loop + while loop if + while loop if + else if + else 
+		// while loop else if + if + else if + else + while loop else if + if + else if + else + while loop else if + while loop else + 1 = 18 
+		//(Normal application Cyclomatic Complexity)
 		if (input.equals("4") || input.toUpperCase().equals("QUIT") ){
 			System.out.println("The application has been terminated.");
 		}

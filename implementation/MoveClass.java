@@ -28,6 +28,7 @@ public class MoveClass {
 	
 
 	public void init () {
+		//Cyclomatic Complexity = for loop + for loop if + 1 = 3
 		for (int i = 800; i < 1700; i += 100){
 			if (i != 1100){
 				tMWF.add(Integer.toString(i));
@@ -35,6 +36,7 @@ public class MoveClass {
 			}
 		}
 
+		//Cyclomatic Complexity = for loop + for loop if + for loop if + for loop if + 1 = 5
 		for (int i = 800; i < 1600; i += 130){
 			if(i == 1230){
 				i -= 30;
@@ -51,6 +53,7 @@ public class MoveClass {
 
 		}		
 
+		//Cyclomatic Complexity = for loop + for loop if + for loop if + 1 = 4
 		for (int i = 800; i < 1600; i += 130){
 			if(i == 1230){
 				i -= 30;
@@ -72,6 +75,7 @@ public class MoveClass {
 	}
 	// Change to CRN soon
 	public void getClassData(String crn){
+		//Cyclomatic Complexity = if + else + 1 = 3
 		listOfClassInfo = sql.getClassInfo(crn);
 		if (listOfClassInfo.isEmpty()){
 			stopper = 1;

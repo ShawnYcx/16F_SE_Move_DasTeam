@@ -146,7 +146,7 @@ public class MySQLAccess {
             
             String sqlCMD;
             String setName = ("'%" + name + "%'");
-
+            //Cyclomatic Complexity = if + else if + else + 1 = 4
             if (days.equals("MWF")){
             // sqlCMD = ("SELECT Begin_Time from cs374_anon WHERE Monday_Ind = 'M' AND Wednesday_Ind like '%W%' AND Friday_Ind like '%F%' AND Last_Name like"+ setLastName + " AND First_Name like" + setFirstName);
                 sqlCMD = ("SELECT Begin_Time from cs374_anon WHERE Monday_Ind = 'M' AND Wednesday_Ind like '%W%' AND Friday_Ind like '%F%' and Instructor_Name like "+ setName + " GROUP BY CRN");
