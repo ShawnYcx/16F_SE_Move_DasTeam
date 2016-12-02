@@ -12,27 +12,27 @@ public class main{
 		// GetClass getClasses = new GetClass();
 		MoveClass moveClass = new MoveClass();
 		Scanner options = new Scanner( System.in );
-		String input, input2;
+		String input, crn, time;
 		moveClass.init();
 		//getClasses.readDatabase();
 
 		System.out.println("Select an option to continue.");
 		
 		System.out.println("Enter the CRN of the class you would like to move: ");
+		System.out.println("Example inputs: [10602, 10902]");
 
-		input = options.next();
-		//input2 = options.next();
-		
-		moveClass.getClassData(input);
-		// Current class time [ACCT120] is on [MWF] at[3:00pm] in room 111
-		// moveClass.setStudentClasses("Payne","Gretchen", "201710");
-
-//0-----------------------example
-		// String result = moveClass.checkProfCollision("M","1500");
-		// System.out.println(result);
-//------------------------end
-
-
+		crn = options.next();
+		while (true){
+			moveClass.getClassData(crn);
+			if (moveClass.getStopper() == 0)
+				break;
+			else{
+				System.out.println("[" + crn + "] does not exist. Please try again.");
+				System.out.println("Enter the CRN of the class you would like to move: ");
+				System.out.println("Example inputs: [10602, 10902]");
+			}
+			crn = options.next();
+		}
 		System.out.println("Which day would you want to move the class to?");
 		System.out.println("Example: type in \"1\" or \" MWF \"");
 		System.out.println("1: MWF");
@@ -51,31 +51,59 @@ public class main{
 				chosen = moveClass.showTimeSlots(input);
 				// System.out.println("Class priority based on number of seniors: " + moveClass.getPriority);
 				if (chosen == 1){
-					input = options.next();
-					input = moveClass.splitAndMergeTimeString(input);
-					if (moveClass.checkProfCollision("MWF", input)){
-						System.out.println("The professor of the class you're trying to move is teaching a class at this time and day.");
-						System.out.println("Please select another.");
-					}
-					// if (moveClass.checkStudentCollision("MWF", input)){
-					// 	System.out.println("Student Collided");
-					// 	// System.out.println(moveClass.getPriority);
-					// }
+					time = options.next();
+					time = moveClass.splitAndMergeTimeString(input);
+				
 					moveClass.showOpenRooms("MWF", input);
+					input = options.next();
+					System.out.println("Are you sure you want to move [CRN: " + crn + "] to Days: [MWF] and Time: "+ "["+ time + "]? (Y/N)");
+					input = options.next();
+					if (input.toUpperCase().equals("Y") || input.toUpperCase().equals("YES")){
+						System.out.println("Class moved!");
+					} else if(input.toUpperCase().equals("N") || input.toUpperCase().equals("NO")){
+						System.out.println("The application has been terminated.");
+					} else {
+						System.out.println("I don't understand that input. Therefore, application terminated. Thank you for your time.");
+					}
 					break;
 				} else if (chosen == 2){
+					time = options.next();
+					time = moveClass.splitAndMergeTimeString(input);
+				
+					moveClass.showOpenRooms("TR", input);
 					input = options.next();
-					input = moveClass.splitAndMergeTimeString(input);
-					// moveClass.showOpenRooms("TR", input);
+					System.out.println("Are you sure you want to move [CRN: " + crn + "] to Days: [MWF] and Time: "+ "["+ time + "]? (Y/N)");
+					input = options.next();
+					if (input.toUpperCase().equals("Y") || input.toUpperCase().equals("YES")){
+						System.out.println("Class moved!");
+					} else if(input.toUpperCase().equals("N") || input.toUpperCase().equals("NO")){
+						System.out.println("The application has been terminated.");
+					} else {
+						System.out.println("I don't understand that input. Therefore, application terminated. Thank you for your time.");
+					}
+
+					moveClass.showOpenRooms("TR", input);
 					break;
 					
 				} else if (chosen == 3){
+					time = options.next();
+					time = moveClass.splitAndMergeTimeString(input);
+				
+					moveClass.showOpenRooms("MW", input);
 					input = options.next();
-					input = moveClass.splitAndMergeTimeString(input);
-					// moveClass.showOpenRooms("MW", input);
+					System.out.println("Are you sure you want to move [CRN: " + crn + "] to Days: [MWF] and Time: "+ "["+ time + "]? (Y/N)");
+					input = options.next();
+					if (input.toUpperCase().equals("Y") || input.toUpperCase().equals("YES")){
+						System.out.println("Class moved!");
+					} else if(input.toUpperCase().equals("N") || input.toUpperCase().equals("NO")){
+						System.out.println("The application has been terminated.");
+					} else {
+						System.out.println("I don't understand that input. Therefore, application terminated. Thank you for your time.");
+					}
+					moveClass.showOpenRooms("MW", input);
 					break;
 				} else if (chosen == -1){
-					input = options.next();
+					time = options.next();
 				} else {
 					break;
 				}
