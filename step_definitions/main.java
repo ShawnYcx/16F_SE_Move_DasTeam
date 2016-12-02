@@ -19,7 +19,7 @@ public class main{
 		System.out.println("Select an option to continue.");
 		
 		System.out.println("Enter the CRN of the class you would like to move: ");
-		System.out.println("Example inputs: [10602, 10902]");
+		System.out.println("Example inputs: [10602, 10457]");
 
 		crn = options.next();
 		moveClass.clearScreen();
@@ -34,7 +34,7 @@ public class main{
 			else{
 				System.out.println("[" + crn + "] does not exist. Please try again.");
 				System.out.println("Enter the CRN of the class you would like to move: ");
-				System.out.println("Example inputs: [10602, 10902]");
+				System.out.println("Example inputs: [10602, 10457]");
 			}
 			crn = options.next();
 			moveClass.clearScreen();

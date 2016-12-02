@@ -158,7 +158,7 @@ public class MoveClass {
 					for (int j = 0; j < tMWF.size(); j+=2) {
 						for (int k = 0; k < newlistOfStudentClasses.size(); k++) {
 							int x;
-							if (tMWF.get(j).equals(newlistOfStudentClasses.get(k))){
+							if (tMWF.get(j).equals(newlistOfStudentClasses.get(k))){//newListOfStudentClasses only contains student's class begin time. 
 								x = Integer.parseInt(tMWF.get(j+1)) + 1;
 								tMWF.set(j+1, Integer.toString(x));
 							}
@@ -171,10 +171,10 @@ public class MoveClass {
 						System.out.println("The professor is having another class a this time: [" + tMWF.get(i) +"]");   
 					else{
 						if (tMWF.get(i+1).equals("0")){
-							System.out.println("[Time: " + tMWF.get(i) + ", Number of seniors: " + tMWF.get(i+1) + "] - Recommended");   
+							System.out.println("[Time: " + tMWF.get(i) + ", All seniors will be able to attend class at this time. " + "] - Recommended");   
 						}
 						else{
-							System.out.println("[Time: " + tMWF.get(i) + ", Number of seniors: " + tMWF.get(i+1) + "]");   
+							System.out.println("[Time: " + tMWF.get(i) + ", Number of seniors have another class at this time: " + tMWF.get(i+1) + "]");   
 						}
 					}
 				}
@@ -198,10 +198,10 @@ public class MoveClass {
 				for (int i = 0; i < tTR.size(); i+=2) {
 					
 					if (tTR.get(i+1).equals("0")){
-						System.out.println("[Time: " + tTR.get(i) + ", Number of seniors: " + tTR.get(i+1) + "] - Recommended");   
+						System.out.println("[Time: " + tTR.get(i) + ", All seniors will be able to attend class at this time. "  + "] - Recommended");   
 					}
 					else{
-						System.out.println("[Time: " + tTR.get(i) + ", Number of seniors: " + tTR.get(i+1) + "]");   
+						System.out.println("[Time: " + tTR.get(i) + ",  Number of seniors have another class at this time: " + tTR.get(i+1) + "]");   
 					}
 				}
 				return 2;
@@ -224,10 +224,10 @@ public class MoveClass {
 				for (int i = 0; i < tTR.size(); i+=2) {
 
 					if (tMW.get(i+1).equals("0")){
-						System.out.println("[Time: " + tMW.get(i) + ", Number of seniors: " + tMW.get(i+1) + "] - Recommended");   
+						System.out.println("[Time: " + tMW.get(i) + ", All seniors will be able to attend class at this time. " + "] - Recommended");   
 					}
 					else{
-						System.out.println("[Time: " + tMW.get(i) + ", Number of seniors: " + tMW.get(i+1) + "]"); 
+						System.out.println("[Time: " + tMW.get(i) + ",  Number of seniors have another class at this time: " + tMW.get(i+1) + "]"); 
 					}
 					  
 				}
