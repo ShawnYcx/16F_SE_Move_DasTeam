@@ -1,4 +1,4 @@
-# CS374-DasTeamProject2
+# 16F_SE_Move_DasTeam
 Das_teamCS374
 Shawn, Steven, Ivan
 Software Engineering 
